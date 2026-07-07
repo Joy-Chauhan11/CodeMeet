@@ -12,14 +12,13 @@
 
 import dotenv from "dotenv";
 
-const result = dotenv.config();
+dotenv.config();
 
-console.log(result);
-console.log(process.env.PORT);
 
 const ENV = {
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
+    DB_URL:process.env.DB_URL
 };
 
 export { ENV };
