@@ -5,7 +5,7 @@ import cors from "cors"
 import { connect_db } from "./libs/db.js";
 const app=express();
 import path from "path"
-import serve from "inngest/express"
+import { serve } from "inngest/express";
 import { functions, inngest } from "./libs/inngest.js";
 const __dirname=path.resolve();
 app.use(express.json());
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      ENV.clinent_url,          // Local React app
+      ENV.client_url,          // Local React app
     ],
     credentials: true
   })
