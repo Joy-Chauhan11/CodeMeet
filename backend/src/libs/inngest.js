@@ -5,8 +5,10 @@ import User from "../models/User.js";
 export const inngest = new Inngest({ id: "CodeMeet" });
 
 const syncUser = inngest.createFunction(
-  { id: "sync-user-from-clerk" },
-  { event: "clerk/user.created" },
+  {
+    id: "sync-user-from-clerk",
+    triggers: [{ event: "clerk/user.created" }],
+  },
   async ({ event }) => {
     await connect_db();
 
@@ -14,7 +16,7 @@ const syncUser = inngest.createFunction(
 
     const newUser = {
       clerkId: id,
-      email: email_addresses[0]?.email_address,
+      email: email_addresses[0]?.email_address, 
       name: `${first_name || ""} ${last_name || ""}`.trim(),
       profileImage: image_url,
     };
@@ -24,8 +26,10 @@ const syncUser = inngest.createFunction(
 );
 
 const deleteUserFromDb = inngest.createFunction(
-  { id: "delete-user-from-clerk" },
-  { event: "clerk/user.deleted" },
+  {
+    id: "delete-user-from-clerk",
+    triggers: [{ event: "clerk/user.deleted" }],
+  },
   async ({ event }) => {
     await connect_db();
 

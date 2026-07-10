@@ -3,7 +3,10 @@ import express from "express";
 import {ENV} from "./libs/env.js"
 import cors from "cors"
 import { connect_db } from "./libs/db.js";
+import { clerkMiddleware } from '@clerk/express'
+
 const app=express();
+
 import path from "path"
 import { serve } from "inngest/express";
 import { functions, inngest } from "./libs/inngest.js";
@@ -20,7 +23,8 @@ app.use(
   })
 );
 app.use("/api/inngest",serve({client:inngest, functions}));
-
+app.use(clerkMiddleware())
+ 
  
 // if(ENV.NODE_ENV==="production"){
 //     app.use(express.static(path.join(__dirname,"../frontend/dist")));
@@ -30,7 +34,7 @@ app.use("/api/inngest",serve({client:inngest, functions}));
 //     })
 // }
 
-app.listen(ENV.PORT,()=>{
+app.listen(ENV.PORT,()=>{ 
 console.log(`server is runnig at ${ENV.PORT}`);
 connect_db();
 })
