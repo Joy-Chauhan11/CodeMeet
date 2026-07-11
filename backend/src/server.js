@@ -4,7 +4,7 @@ import {ENV} from "./libs/env.js"
 import cors from "cors"
 import { connect_db } from "./libs/db.js";
 import { clerkMiddleware } from '@clerk/express'
-
+import sessionRoutes from "./routes/sessionRoutes.js"
 const app=express();
 
 import path from "path"
@@ -23,7 +23,8 @@ app.use(
   })
 );
 app.use("/api/inngest",serve({client:inngest, functions}));
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
+app.use("/api/sessions",sessionRoutes)
  
  
 // if(ENV.NODE_ENV==="production"){
