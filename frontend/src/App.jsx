@@ -3,9 +3,9 @@ import {
   SignedIn,SignedOut,SignInButton,SignUpButton,SignOutButton, UserButton,
   useUser,
 } from "@clerk/clerk-react";
-import Homepage from './pages/Homepage'
-import AboutPage from './pages/AboutPage'
-import ProblemPage from './pages/ProblemPage';
+import Homepage from './pages/HomePage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import ProblemPage from './pages/ProblemPage.jsx';
 import {Toaster} from "react-hot-toast"
 
 function App() {
