@@ -1,26 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { Routes, Route, Navigate } from "react-router-dom";
 import {
   SignedIn,SignedOut,SignInButton,SignUpButton,SignOutButton, UserButton,
+  useUser,
 } from "@clerk/clerk-react";
-import './App.css'
+import Homepage from './pages/Homepage'
+import AboutPage from './pages/AboutPage'
+import ProblemPage from './pages/ProblemPage';
+import {Toaster} from "react-hot-toast"
 
 function App() {
-  const [count, setCount] = useState(0)
+const {isSignedIn} = useUser();
 
   return (
-    <>
-      <h1 style={{color:'white' }} > WELCOME CODEMMET</h1>
-    
-      <SignedOut>
-  <SignInButton  mode='modal'/>
-      </SignedOut>
-      <SignedIn>
-        <SignOutButton />
-      </SignedIn>
-<UserButton/> 
+  <>
+    <Routes>
+        <Route path="/" element={<Homepage/>} />
+        <Route path="/problems" element={isSignedIn ? <ProblemPage/> : <Navigate to ={"/"}/>} />
+
+        <Route path="/about" element={<AboutPage/>} />
+
+    </Routes>
+
+    <Toaster />
     </>
   )
 }
