@@ -4,20 +4,24 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import Homepage from './pages/HomePage.jsx'
-import AboutPage from './pages/AboutPage.jsx'
+import DashboardPage from './pages/DashboardPage.jsx'
 import ProblemPage from './pages/ProblemPage.jsx';
 import {Toaster} from "react-hot-toast"
 
 function App() {
-const {isSignedIn} = useUser();
+const {isSignedIn,isLoaded} = useUser();
 
+if(!isLoaded){
+  return null
+}
   return (
   <>
     <Routes>
-        <Route path="/" element={<Homepage/>} />
+        <Route path="/" element={!isSignedIn ? <Homepage/> : <Navigate to ={"/dashboard"}/>} />
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage/> : <Navigate to ={"/"}/>} />
+
         <Route path="/problems" element={isSignedIn ? <ProblemPage/> : <Navigate to ={"/"}/>} />
 
-        <Route path="/about" element={<AboutPage/>} />
 
     </Routes>
 
