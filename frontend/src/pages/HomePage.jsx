@@ -18,7 +18,7 @@ function Homepage() {
   
 
   <h1 className="text-3xl font-bold">
-    Code<span className="text-white">Meet</span>
+    <span className="text-emerald-400">Code</span><span className="text-white">Meet</span>
   </h1>
 </Link>
 
@@ -29,8 +29,8 @@ function Homepage() {
         </div>
 
         <SignInButton mode="modal">
-          <button className=" px-5 py-2 rounded-xl transition">
-                     <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
+          <button className=" px-5 py-2 rounded-xl transition bg-emerald-400">
+           <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
 
  Get Started</span>
           </button>
@@ -47,7 +47,7 @@ function Homepage() {
             </p>
 
             <h1 className="text-5xl lg:text-6xl font-extrabold leading-tight">
-              Ace Coding Interviews
+             <span className="text-emerald-300"> Ace Coding Interviews</span>
               <br />
               Together.
             </h1>
@@ -60,9 +60,9 @@ function Homepage() {
 
            <div className="mt-10 flex flex-wrap items-center gap-4">
   {/* Primary Button */}
-  <button className="btn btn-primary rounded-xl px-7 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-primary/40 group">
-    <span>Start Coding Now</span>
-    <ArrowRightIcon className="ml-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+  <button className="btn bg-emerald-400  rounded-xl px-7 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-primary/40 group">
+    <span className="text-black font-bold">Start Coding Now</span>
+    <ArrowRightIcon className="ml-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 text-black" />
   </button>
 
   {/* Secondary Button */}
@@ -88,7 +88,7 @@ function Homepage() {
         <div className="grid md:grid-cols-3 gap-8">
          <div className="card bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+              <div className="size-16 bg-emerald-500 rounded-2xl flex items-center justify-center mb-4">
                 <VideoIcon className="size-8 text-primary" />
               </div>
               <h3 className="card-title">HD Video Call</h3>
@@ -100,7 +100,7 @@ function Homepage() {
 
 <div className="card bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+              <div className="size-16 bg-emerald-500 rounded-2xl flex items-center justify-center mb-4">
                 <Code2Icon className="size-8 text-primary" />
               </div>
               <h3 className="card-title">Live Code Editor</h3>
@@ -112,7 +112,7 @@ function Homepage() {
 
            <div className="card bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
+              <div className="size-16 bg-emerald-500 rounded-2xl flex items-center justify-center mb-4">
                 <UsersIcon className="size-8 text-primary" />
               </div>
               <h3 className="card-title">Easy Collaboration</h3>

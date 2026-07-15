@@ -6,6 +6,7 @@ import React from 'react'
 } from "@clerk/clerk-react";
 
 
+
 function DashboardPage() {
   return (<>
     <div>DashboaredPage</div>
@@ -16,6 +17,11 @@ SignOut
       </button>
     </SignOutButton>
     </SignedIn>
+
+
+
+
+   
     </>
   )
 }
