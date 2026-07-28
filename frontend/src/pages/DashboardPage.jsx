@@ -4,15 +4,16 @@ import React from 'react'
   SignedIn,
   useUser
 } from "@clerk/clerk-react";
-
+import Navbar from '../components/navbar';
 
 
 function DashboardPage() {
   return (<>
-    <div>DashboaredPage</div>
+  <Navbar/>
+
     <SignedIn>
     <SignOutButton>
-      <button>
+      <button className='bg-amber-200 rounded-xl text-black h-15 w-20 justify-center'>
 SignOut
       </button>
     </SignOutButton>
