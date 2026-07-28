@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import {
   SignedIn,SignedOut,SignInButton,SignUpButton,SignOutButton, UserButton,
@@ -5,7 +6,9 @@ import {
 } from "@clerk/clerk-react";
 import Homepage from './pages/HomePage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
-import ProblemPage from './pages/ProblemPage.jsx';
+import ProblemsPage from './pages/ProblemsPage.jsx';
+import ProblemPage from "./pages/ProblemPage.jsx";
+
 import {Toaster} from "react-hot-toast"
 
 function App() {
@@ -20,11 +23,11 @@ if(!isLoaded){
         <Route path="/" element={!isSignedIn ? <Homepage/> : <Navigate to ={"/dashboard"}/>} />
         <Route path="/dashboard" element={isSignedIn ? <DashboardPage/> : <Navigate to ={"/"}/>} />
 
-        <Route path="/problems" element={isSignedIn ? <ProblemPage/> : <Navigate to ={"/"}/>} />
+        <Route path="/problems" element={isSignedIn ? <ProblemsPage/> : <Navigate to ={"/"}/>} />
+        <Route path="/problem/:id" element={isSignedIn ? <ProblemPage/> : <Navigate to ={"/"}/>} />
 
 
     </Routes>
-
     <Toaster />
     </>
   )

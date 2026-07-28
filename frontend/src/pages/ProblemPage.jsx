@@ -1,160 +1,207 @@
-import React from 'react'
-import Navbar from '../components/navbar'
-import { Link } from "react-router-dom";
+import { useState ,useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import Navbar from "../components/Navbar.jsx";
+import ProblemHeader from "../components/ProblemHeader.jsx";
+import ProblemTabs from "../components/ProblemTabs.jsx";
+import CodeEditor from "../components/CodeEditor.jsx";
+import OutputPanel from "../components/outputPannel.jsx";
 import { PROBLEMS } from "../data/problems.js";
 
-import {
-  Code2Icon,
-  ChevronRightIcon,
-  SearchIcon
-} from "lucide-react";
+const EXECUTION_URL = import.meta.env.VITE_CODE_ENGINE_API;
 
-import { getDifficultyBadgeClass } from "../lib/utils";
+
+
+import {
+  Panel,
+  PanelGroup,
+  PanelResizeHandle,
+} from "react-resizable-panels";
 
 export default function ProblemPage() {
+  const { id } = useParams();
 
-const problems = Object.values(PROBLEMS);
+  const problem = PROBLEMS[id];
 
-  const easyProblemsCount = problems.filter((p) => p.difficulty === "Easy").length;
-  const mediumProblemsCount = problems.filter((p) => p.difficulty === "Medium").length;
-  const hardProblemsCount = problems.filter((p) => p.difficulty === "Hard").length;
+  const [language, setLanguage] = useState("javascript");
+  const [code, setCode] = useState(
+  problem.starterCode["javascript"]
+);
 
 
+
+  if (!problem) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <h1 className="text-2xl font-bold">Problem not found</h1>
+      </div>
+    );
+  }
+
+
+
+const handleRun = async () => {
+  try {
+    const response = await fetch(EXECUTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        language,
+        code,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to execute code");
+    }
+
+    const result = await response.json();
+
+    console.log(result);
+
+    // Later you'll do:
+    // setOutput(result);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
-  <>
-  <Navbar />
-  
-<div className="p-10">
-<div className=" p-10">
-  <h1 className="text-5xl font-black mb-3">
-    Code Challenges
-  </h1>
+    <div className="h-screen flex flex-col overflow-hidden bg-base-100">
 
-  <p className="text-base-content/70 max-w-2xl">
-    Practice interview-ready coding problems and improve your
-    problem-solving skills before your next technical interview.
-  </p>
-</div>
+      {/* Navbar */}
+      <Navbar />
 
+      {/* Workspace */}
+      <div className="flex-1 min-h-0">
 
+        <PanelGroup
+          direction="horizontal"
+          className="h-full"
+        >
 
-<div className="flex flex-col lg:flex-row gap-4 justify-between mb-10 p-10">
+          {/* ================= LEFT PANEL ================= */}
 
-  <div className="relative w-full lg:max-w-md">
-    <SearchIcon
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-base-content/40"
-    />
+          <Panel
+            defaultSize={32}
+            minSize={22}
+          >
 
-    <input
-        type="text"
-        placeholder="Search problems..."
-        className="input input-bordered w-full "
-    />
-</div>
+            <div className="flex h-full min-h-0 flex-col border-r border-base-300">
 
-  <div className="flex gap-2 flex-wrap">
-    <button className="btn bg-emerald-400 text-black rounded-full hover:bg-emerald-500">
-      All
-    </button>
+              {/* Fixed Header */}
+              <ProblemHeader problem={problem} />
 
-    <button className="btn btn-outline rounded-full">
-      Easy
-    </button>
+              {/* Scrollable Body */}
+              <div className="flex-1 min-h-0 overflow-y-auto">
+                <ProblemTabs problem={problem} />
+              </div>
 
-    <button className="btn btn-outline rounded-full">
-      Medium
-    </button>
+            </div>
 
-    <button className="btn btn-outline rounded-full">
-      Hard
-    </button>
-  </div>
+          </Panel>
 
-</div>
+          {/* Vertical Resize */}
+          <PanelResizeHandle className="group relative  cursor-col-resize bg-base-300 transition-colors hover:bg-primary">
 
+            <div
+              className="
+              absolute
+              left-1/2
+              top-0
+              h-full
+\              -translate-x-1/2
+              bg-primary
+              opacity-0
+              transition-opacity
+              duration-300
+              group-hover:opacity-100
+            "
+            />
 
-{/* Problem List */}
-<div className="space-y-5">
-  {problems.map((problem) => (
-    <Link
-      key={problem.id}
-      to={`/problem/${problem.id}`}
-      className="group block rounded-2xl border border-base-300 bg-base-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl"
-    >
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-        {/* Left */}
-        <div className="flex gap-5 flex-1">
-          {/* Icon */}
-          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
-            <Code2Icon className="h-7 w-7 text-emerald-300 transition-transform duration-300 group-hover:rotate-6" />
-          </div>
+          </PanelResizeHandle>
 
-          {/* Content */}
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center gap-3">
-              <h2 className="text-2xl font-bold">
-                {problem.title}
-              </h2>
+          {/* ================= RIGHT PANEL ================= */}
 
-              <span
-                className={`badge badge-lg rounded-full ${getDifficultyBadgeClass(
-                  problem.difficulty
-                )}`}
+          <Panel
+            defaultSize={68}
+            minSize={35}
+          >
+
+            <PanelGroup
+              direction="vertical"
+              className="h-full"
+            >
+
+              {/* Editor */}
+
+              <Panel
+                defaultSize={72}
+                minSize={35}
               >
-                {problem.difficulty}
-              </span>
-            </div>
 
-            <p className="mt-1 text-sm uppercase tracking-wider text-emerald-300">
-              {problem.category}
-            </p>
+                <div className="h-full min-h-0">
 
-            <p className="mt-4 text-base-content/70 leading-7">
-              {problem.description.text}
-            </p>
-          </div>
-        </div>
+                  <CodeEditor
+                    problem={problem}
+                    language={language}
+                    setLanguage={setLanguage}
+                    code={code}
+    setCode={setCode}
+    onRun={handleRun}
+                  />
 
-        {/* Right */}
-        <div className="flex items-center">
-          <button className="btn bg-emerald-300 text-gray-700 group">
-            Solve Challenge
+                </div>
 
-            <ChevronRightIcon className="ml-1 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
-        </div>
+              </Panel>
+
+              {/* Horizontal Resize */}
+
+              <PanelResizeHandle className="group relative cursor-row-resize bg-base-300 transition-colors hover:bg-primary">
+
+                <div
+                  className="
+                  absolute
+                  top-1/2
+                  left-0
+                  w-full
+                  -translate-y-1/2
+                  bg-primary
+                  opacity-0
+                  transition-opacity
+                  duration-300
+                  group-hover:opacity-100
+                "
+                />
+
+              </PanelResizeHandle>
+
+              {/* Output */}
+
+              <Panel
+                defaultSize={28}
+                minSize={15}
+              >
+
+                <div className="h-full min-h-0">
+
+                  <OutputPanel />
+
+                </div>
+
+              </Panel>
+
+            </PanelGroup>
+
+          </Panel>
+
+        </PanelGroup>
+
       </div>
-    </Link>
-  ))}
-</div>
-</div>
 
-<div className="mt-12 card bg-base-100 shadow-lg">
-          <div className="card-body">
-            <div className="stats stats-vertical lg:stats-horizontal">
-              <div className="stat">
-                <div className="stat-title">Total Problems</div>
-                <div className="stat-value text-primary">{problems.length}</div>
-              </div>
-
-              <div className="stat">
-                <div className="stat-title">Easy</div>
-                <div className="stat-value text-success">{easyProblemsCount}</div>
-              </div>
-              <div className="stat">
-                <div className="stat-title">Medium</div>
-                <div className="stat-value text-warning">{mediumProblemsCount}</div>
-              </div>
-              <div className="stat">
-                <div className="stat-title">Hard</div>
-                <div className="stat-value text-error">{hardProblemsCount}</div>
-              </div>
-            </div>
-          </div>
-          </div> 
-
-  </>
-  )
+    </div>
+  );
 }
-

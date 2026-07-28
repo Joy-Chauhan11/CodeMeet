@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-"build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
     "start": "npm run start --prefix backend"
   },
   "repository": {
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Joy-Chauhan11/CodeMeet/issues"
   },
-  "homepage": "https://github.com/Joy-Chauhan11/CodeMeet#readme"
+  "homepage": "https://github.com/Joy-Chauhan11/CodeMeet#readme",
+  "dependencies": {
+    "react-resizable-panels": "^4.12.2"
+  }
 }

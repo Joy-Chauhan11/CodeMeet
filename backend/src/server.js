@@ -10,22 +10,31 @@ const app=express();
 import path from "path"
 import { serve } from "inngest/express";
 import { functions, inngest } from "./libs/inngest.js";
+import executionRoutes from "./routes/executionRouter.js"
 const __dirname=path.resolve();
+
 app.use(express.json());
  
-
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
 app.use(
   cors({
     origin: [
-      ENV.client_url,          // Local React app
+      ENV.client_url, 
+               // Local React app
     ],
     credentials: true
   })
 );
+
+
+console.log("CLIENT URL:", ENV.client_url);
 app.use("/api/inngest",serve({client:inngest, functions}));
 app.use(clerkMiddleware());
 app.use("/api/sessions",sessionRoutes)
- 
+ app.use("/api", executionRoutes);
  
 // if(ENV.NODE_ENV==="production"){
 //     app.use(express.static(path.join(__dirname,"../frontend/dist")));
