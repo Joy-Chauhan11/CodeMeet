@@ -8,8 +8,6 @@ import sessionRoutes from "./routes/sessionRoutes.js"
 const app=express();
 
 import path from "path"
-import { serve } from "inngest/express";
-import { functions, inngest } from "./libs/inngest.js";
 import executionRoutes from "./routes/executionRouter.js"
 const __dirname=path.resolve();
 
@@ -31,8 +29,8 @@ app.use(
 
 
 console.log("CLIENT URL:", ENV.client_url);
-app.use("/api/inngest",serve({client:inngest, functions}));
 app.use(clerkMiddleware());
+
 app.use("/api/sessions",sessionRoutes)
  app.use("/api", executionRoutes);
  

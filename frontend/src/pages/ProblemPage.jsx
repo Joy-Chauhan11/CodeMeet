@@ -27,6 +27,12 @@ export default function ProblemPage() {
   const [code, setCode] = useState(
   problem.starterCode["javascript"]
 );
+const [output, setOutput] = useState("");
+const [error, setError] = useState("");
+const [isRunning, setIsRunning] = useState(false);
+
+const [testResults, setTestResults] = useState(null);
+const [aiReview, setAiReview] = useState(null);
 
 
 
@@ -60,6 +66,13 @@ const handleRun = async () => {
     const result = await response.json();
 
     console.log(result);
+
+    setIsRunning(false);
+
+if (result.success) {
+    setOutput(result.stdout);
+    setError(result.stderr);
+}
 
     // Later you'll do:
     // setOutput(result);
@@ -188,7 +201,13 @@ const handleRun = async () => {
 
                 <div className="h-full min-h-0">
 
-                  <OutputPanel />
+                  <OutputPanel
+                        output={output}
+                        error={error}
+                        isRunning={isRunning}
+                        testResults={testResults}
+                        aiReview={aiReview}
+                            />
 
                 </div>
 

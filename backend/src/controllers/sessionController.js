@@ -13,7 +13,7 @@ return  res.status(400).json("Problem and Difficulty are required");
    
     const session = await Session.create({
         problem,
-        difficulty,
+        difficulty:difficulty.toLowerCase(),
          host:user,
         roomId  })
      
@@ -22,7 +22,7 @@ return  res.status(400).json("Problem and Difficulty are required");
     catch(error){
 
         console.log("Error in createSession controller:", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" , Err : error.message});
     }
 
     
@@ -64,11 +64,14 @@ export async function getMyRecentSessions(req,res){
     res.status(500).json({ message: "Internal Server Error" });
          }
 }
-export async function getSessionById(req,res){
+export async function getSessionByRoomId(req,res){
       try {
     const { id } = req.params;
 
-    const session = await Session.findById(id)
+    const session = await Session.findOne({
+          roomId: req.params.roomId
+
+    })
       .populate("host", "name email profileImage clerkId")
       .populate("participant", "name email profileImage clerkId");
 
