@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect ,useRef } from "react";
 import Editor from "@monaco-editor/react";
 import { Play, Send, RotateCcw, ChevronDown } from "lucide-react";
 
 import { LANGUAGE_CONFIG } from "../data/problems.js";
+
 
 export default function CodeEditor({
   problem,
@@ -10,16 +11,70 @@ export default function CodeEditor({
   setLanguage,
   code,
   setCode,
-  onRun
+  onRun,
+  socket,
+  roomId
 }) {
 
 
   
+const isUpdate = useRef(false);
+const editorRef = useRef(null);
+const decor = useRef([]);
+const handleLanguageChange = (lang) => {
+  setLanguage(lang);
+  setCode(problem.starterCode[lang]);
 
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    setCode(problem.starterCode[lang]);
+  socket?.emit("language-change", {
+    roomId,
+    language: lang,
+  });
+};
+  useEffect(() => {
+  if (!socket) return;
+
+  const handleLanguage = ({ language }) => {
+    setLanguage(language);
+    setCode(problem.starterCode[language]);
   };
+
+  socket.on("receive-language", handleLanguage);
+
+  return () => {
+    socket.off("receive-language", handleLanguage);
+  };
+}, [socket, problem]);
+
+
+useEffect(() => {
+    if (!socket) return;
+
+    const handleCursor = ({ position }) => {
+    };
+
+    socket.on("receive-cursor", handleCursor);
+
+    return () => {
+        socket.off("receive-cursor", handleCursor);
+    };
+}, [socket]);
+
+
+
+  useEffect(()=>{
+    if(!socket){
+      return
+    }
+    const receiveCode = ({newCode})=>{
+      isUpdate.current=true;
+      setCode(newCode);
+    }
+
+    socket.on("new-code",receiveCode);
+      return () => {
+        socket.off("new-code",receiveCode);
+    };
+  },[setCode,socket])
 
   return (
 <div className="flex flex-col h-full min-h-0 bg-base-100">
@@ -118,8 +173,16 @@ export default function CodeEditor({
   height="100%"
   language={LANGUAGE_CONFIG[language].monacoLang}
   value={code}
-  onChange={(value) => {
+  onChange={(value="") => {
+    if(isUpdate.current){
+      isUpdate.current=false;
+      return
+    }
     setCode(value);
+    socket?.emit("code-change",{
+      roomId : roomId,
+      code : value
+    });
     
   }}
   theme="vs-dark"
@@ -134,6 +197,17 @@ export default function CodeEditor({
     padding: {
       top: 20,
     },
+
+  }}
+  onMount={(editor)=>{
+    editorRef.current=editor;
+    editor.onDidChangeCursorPosition((event)=>{
+    socket?.emit("onCode-change",{
+      roomId,
+      position : event.position
+    })
+ 
+    })
   }}
 />
       </div>
