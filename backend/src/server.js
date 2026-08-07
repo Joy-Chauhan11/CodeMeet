@@ -1,15 +1,23 @@
 
 import express from "express";
+import http from "http"
 import {ENV} from "./libs/env.js"
 import cors from "cors"
 import { connect_db } from "./libs/db.js";
 import { clerkMiddleware } from '@clerk/express'
-import sessionRoutes from "./routes/sessionRoutes.js"
-const app=express();
+import { initializeSocket } from "./socket/socket.js";
 
+import sessionRoutes from "./routes/sessionRoutes.js"
 import path from "path"
 import executionRoutes from "./routes/executionRouter.js"
 const __dirname=path.resolve();
+
+
+
+const app=express();
+const server = http.createServer(app);
+initializeSocket(server);
+
 
 app.use(express.json());
  
@@ -42,7 +50,7 @@ app.use("/api/sessions",sessionRoutes)
 //     })
 // }
 
-app.listen(ENV.PORT,()=>{ 
+server.listen(ENV.PORT,()=>{ 
 console.log(`server is runnig at ${ENV.PORT}`);
 connect_db();
 })

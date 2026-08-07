@@ -164,7 +164,11 @@ if (result.success) {
                     setLanguage={setLanguage}
                     code={code}
     setCode={setCode}
+    socket={null}
+    roomId={"null"}
+
     onRun={handleRun}
+    
                   />
 
                 </div>
