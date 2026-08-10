@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast"
+import { VolumeOff,Volume2 ,Video,
+  VideoOff,Cast, Maximize, Minimize} from "lucide-react";
 
 
 export default function VideoPanel({ socket, roomId }) {
@@ -7,8 +9,28 @@ export default function VideoPanel({ socket, roomId }) {
   const remoteVideoRef = useRef(null);
   const peerConnection = useRef(null);
   const pendingCandidates = useRef([]);
-  const[remoteConnected,setRemoteConnected]=useState(false);
+const [micOn, setMicOn] = useState(true);
+const [remoteConnected, setRemoteConnected] = useState(false);
+  const [cameraOn, setCameraOn] = useState(true);
+const [screenSharing, setScreenSharing] = useState(false);
 
+const [fullscreenVideo, setFullscreenVideo] = useState(null);
+
+
+
+
+const toggleFullscreen = async (videoRef, type) => {
+  if (fullscreenVideo === type) {
+    await document.exitFullscreen();
+    setFullscreenVideo(null);
+    return;
+  }
+
+  if (videoRef.current) {
+    await videoRef.current.requestFullscreen();
+    setFullscreenVideo(type);
+  }
+};
   // ==========================
   // Create Offer
   // ==========================
@@ -244,6 +266,105 @@ useEffect(() => {
     toast.dismiss("waiting-toast");
   };
 }, []);
+
+
+// mic toggle
+
+const toggleMic = () => {
+  const stream = localVideoRef.current?.srcObject;
+
+  if (!stream) return;
+
+  stream.getAudioTracks().forEach((track) => {
+    track.enabled = !track.enabled;
+  });
+
+  setMicOn((prev) => !prev);
+};
+
+// CAMERA TOGGLE
+
+const toggleCamera = () => {
+  const stream = localVideoRef.current?.srcObject;
+
+  if (!stream) return;
+
+  stream.getVideoTracks().forEach((track) => {
+    track.enabled = !track.enabled;
+  });
+
+  setCameraOn((prev) => !prev);
+};
+
+const startScreenShare = async () => {
+  try {
+    const screenStream =
+      await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+
+    console.log("Screen sharing started");
+
+    const screenTrack = screenStream.getVideoTracks()[0];
+
+    const videoSender = peerConnection.current
+      ?.getSenders()
+      .find(
+        (sender) =>
+          sender.track &&
+          sender.track.kind === "video"
+      );
+
+    if (!videoSender) {
+      console.error("Video sender not found");
+      return;
+    }
+
+    await videoSender.replaceTrack(screenTrack);
+
+    localVideoRef.current.srcObject = screenStream;
+
+    setScreenSharing(true);
+
+    console.log("Camera track replaced with screen track");
+
+    screenTrack.onended = async () => {
+      console.log("Screen sharing stopped");
+
+      await stopScreenShare(videoSender);
+    };
+  } catch (error) {
+    console.error("Screen sharing error:", error);
+  }
+};
+
+
+
+// Stop scrren sharing
+
+const stopScreenShare = async (videoSender) => {
+  try {
+    const cameraStream =
+      await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+    const cameraTrack =
+      cameraStream.getVideoTracks()[0];
+
+    await videoSender.replaceTrack(cameraTrack);
+
+    localVideoRef.current.srcObject = cameraStream;
+
+    setScreenSharing(false);
+
+    console.log("Camera restored");
+  } catch (error) {
+    console.error("Failed to restore camera:", error);
+  }
+};
+
   return (
     <div className="h-full bg-base-200 flex flex-col p-4 gap-4">
 
@@ -264,6 +385,20 @@ useEffect(() => {
         </div>
       </div>
 
+      
+      <button
+  className="btn btn-sm btn-outline"
+  onClick={() => toggleFullscreen(localVideoRef, "local")}
+      >
+  {fullscreenVideo === "local" ? (
+    <Minimize size={16} />
+  ) : (
+    <Maximize size={16} />
+  )}
+
+  {fullscreenVideo === "local" ? "Exit" : "Full Screen"}
+</button>
+
       {/* Remote Video */}
       <div>
         <h2 className="font-semibold text-lg mb-2">
@@ -279,6 +414,43 @@ useEffect(() => {
           />
         </div>
       </div>
+
+      <button
+  className="btn btn-sm btn-outline"
+  onClick={() => toggleFullscreen(remoteVideoRef, "remote")}
+>
+  {fullscreenVideo === "remote" ? (
+    <Minimize size={16} />
+  ) : (
+    <Maximize size={16} />
+  )}
+
+  {fullscreenVideo === "remote" ? "Exit" : "Full Screen"}
+</button>
+     <div className="flex justify-center gap-4 mt-4">
+
+  <button
+    className="btn btn-circle btn-primary"
+    onClick={toggleMic}
+  >
+    {micOn ? <Volume2 size={20} /> : <VolumeOff size={20} />}
+  </button>
+
+  <button
+    className="btn btn-circle btn-primary"
+    onClick={toggleCamera}
+  >
+    {cameraOn ? <Video size={20} /> : <VideoOff size={20} />}
+  </button>
+
+  <button
+  className="btn btn-circle btn-primary"
+  onClick={startScreenShare}
+>
+  <Cast size={20} />
+</button>
+
+</div>
 
     </div>
   );
