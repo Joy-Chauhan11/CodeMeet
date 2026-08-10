@@ -13,6 +13,7 @@ import CodeEditor from "../components/CodeEditor";
 import CollaborationPanel from "../components/SessionComponents/CollaborationPanel";
 import OutputPanel from "../components/outputPannel.jsx";
 
+const EXECUTION_URL = import.meta.env.VITE_CODE_ENGINE_API;
 
 
 
@@ -36,6 +37,12 @@ const navigate = useNavigate();
 const [message, setMessage] = useState("");
 const [socket, setSocket] = useState(null);
 const [code, setCode] = useState("");
+const [isRunning, setIsRunning] = useState(false);
+const [output, setOutput] = useState("");
+const [error, setError] = useState("");
+const [testResults, setTestResults] = useState(null);
+const [aiReview, setAiReview] = useState(null);
+
 
   // ==========================
   // Fetch Session
@@ -126,6 +133,44 @@ if (!currentProblem) {
 }
 
 
+
+  // ======On Run
+  const handleRun = async () => {
+  try {
+    const response = await fetch(EXECUTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        language,
+        code,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to execute code");
+    }
+
+    const result = await response.json();
+
+    console.log(result);
+
+    setIsRunning(false);
+
+if (result.success) {
+    setOutput(result.stdout);
+    setError(result.stderr);
+}
+
+    // Later you'll do:
+    // setOutput(result);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   // ==========================
   // UI
   // ==========================
@@ -169,7 +214,7 @@ if (!currentProblem) {
                     setCode={setCode}
                     socket={socket}
                     roomId={roomId}
-                    onRun={() => console.log("Run")}
+                    onRun={handleRun }
                   />
                 </div>
               </Panel>
@@ -183,7 +228,14 @@ if (!currentProblem) {
           {/* Output */}
           <Panel defaultSize={25} minSize={15} maxSize={40}>
             <div className="h-full overflow-hidden">
-              <OutputPanel />
+              <OutputPanel
+                                      output={output}
+                                      error={error}
+                                      isRunning={isRunning}
+                                      testResults={testResults}
+                                      aiReview={aiReview}
+                                          />
+              
             </div>
           </Panel>
 
