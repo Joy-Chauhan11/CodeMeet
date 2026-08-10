@@ -11,6 +11,7 @@ import CreateSessionModal from "../components/CreateSessionModel.jsx";
 import axios from "axios"
 
 
+
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { getToken } = useAuth();
@@ -157,6 +158,8 @@ export default function DashboardPage() {
         onCreateRoom={handleCreateRoom}
         isCreating={false}
       />
+      
+
     </>
   );
 }

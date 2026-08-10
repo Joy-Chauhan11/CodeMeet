@@ -1,9 +1,11 @@
-import { Code2, Sparkles, Plus } from "lucide-react";
+import { Code2, Sparkles, Plus,LogIn } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 export default function WelcomeSection({ onCreateSession }) {
   const { user } = useUser();
-
+const navigate = useNavigate();
   const firstName = user?.firstName || "Developer";
 
   return (
@@ -21,7 +23,7 @@ export default function WelcomeSection({ onCreateSession }) {
 
               <div>
                 <h1 className="text-4xl font-bold">
-                  Welcome back, {firstName} 👋
+                  Welcome back, {firstName} 
                 </h1>
 
                 <p className="text-base-content/70 mt-1">
@@ -60,6 +62,13 @@ export default function WelcomeSection({ onCreateSession }) {
               <Plus className="w-5 h-5" />
               Create Session
             </button>
+            <button
+className="btn bg-emerald-700 text-gray-32 btn-lg gap-2"
+  onClick={() => navigate("/join-session")}
+>
+  <LogIn className="w-5 h-5" />
+  Join Session
+</button>
 
             <p className="text-sm text-base-content/60 text-right max-w-xs">
               Start a collaborative coding room and invite others to join.
