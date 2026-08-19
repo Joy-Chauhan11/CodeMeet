@@ -14,6 +14,7 @@ import CollaborationPanel from "../components/SessionComponents/CollaborationPan
 import OutputPanel from "../components/outputPannel.jsx";
 
 const EXECUTION_URL = import.meta.env.VITE_CODE_ENGINE_API;
+const EXECUTION_URL_JUDGE =import.meta.env.VITE_CODE_ENGINE_API_JUDGE ; 
 
 
 
@@ -42,7 +43,7 @@ const [output, setOutput] = useState("");
 const [error, setError] = useState("");
 const [testResults, setTestResults] = useState(null);
 const [aiReview, setAiReview] = useState(null);
-
+const [customInput, setCustomInput] = useState("");
 
   // ==========================
   // Fetch Session
@@ -135,17 +136,25 @@ if (!currentProblem) {
 
 
   // ======On Run
-  const handleRun = async () => {
+const handleRun = async () => {
   try {
+    setIsRunning(true);
+    setOutput("");
+    setError("");
+    setTestResults(null);
+
+    const testCases = currentProblem.testCases;
+
     const response = await fetch(EXECUTION_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        language,
-        code,
-      }),
+  language,
+  code,
+  stdin: customInput,
+}),
     });
 
     if (!response.ok) {
@@ -154,23 +163,62 @@ if (!currentProblem) {
 
     const result = await response.json();
 
-    console.log(result);
+    console.log("Execution result:", result);
 
+    if (result.success) {
+      setOutput(result.stdout);
+      setError(result.stderr);
+    } else {
+      setError(result.stderr || "Code execution failed");
+    }
+
+  } catch (error) {
+    console.error("Execution Error:", error);
+    setError(error.message);
+  } finally {
     setIsRunning(false);
-
-if (result.success) {
-    setOutput(result.stdout);
-    setError(result.stderr);
-}
-
-    // Later you'll do:
-    // setOutput(result);
-
-  } catch (err) {
-    console.error(err);
   }
 };
 
+
+// ============== handle submit function
+const handleSubmit = async () => {
+  try {
+    setIsRunning(true);
+    setError("");
+    setTestResults(null);
+
+    const token = await getToken();
+
+    const response = await axios.post(
+      EXECUTION_URL_JUDGE,
+      {
+        language,
+        code,
+        testCases: currentProblem.testCases,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Judge result:", response.data);
+
+    setTestResults(response.data);
+
+  } catch (error) {
+    console.error("Judge error:", error);
+
+    setError(
+      error.response?.data?.message ||
+      "Failed to judge code"
+    );
+  } finally {
+    setIsRunning(false);
+  }
+};
   // ==========================
   // UI
   // ==========================
@@ -206,7 +254,7 @@ if (result.success) {
               {/* Editor */}
               <Panel defaultSize={70} minSize={40}>
                 <div className="h-full overflow-hidden">
-                  <CodeEditor
+                  {/* <CodeEditor
                     problem={currentProblem}
                     language={language}
                     setLanguage={setLanguage}
@@ -215,7 +263,18 @@ if (result.success) {
                     socket={socket}
                     roomId={roomId}
                     onRun={handleRun }
-                  />
+                  /> */}
+                  <CodeEditor
+  problem={currentProblem}
+  language={language}
+  setLanguage={setLanguage}
+  code={code}
+  setCode={setCode}
+  socket={socket}
+  roomId={roomId}
+  onRun={handleRun}
+  onSubmit={handleSubmit}
+/>
                 </div>
               </Panel>
 
@@ -229,12 +288,14 @@ if (result.success) {
           <Panel defaultSize={25} minSize={15} maxSize={40}>
             <div className="h-full overflow-hidden">
               <OutputPanel
-                                      output={output}
-                                      error={error}
-                                      isRunning={isRunning}
-                                      testResults={testResults}
-                                      aiReview={aiReview}
-                                          />
+  output={output}
+  error={error}
+  isRunning={isRunning}
+  testResults={testResults}
+  aiReview={aiReview}
+  customInput={customInput}
+  setCustomInput={setCustomInput}
+/>
               
             </div>
           </Panel>

@@ -30,7 +30,7 @@ export default function ActiveSessions({
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">
-            🔥 Active Sessions
+            Active Sessions
           </h2>
 
           <div className="badge badge-primary">

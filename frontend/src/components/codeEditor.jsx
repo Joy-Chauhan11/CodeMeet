@@ -4,7 +4,6 @@ import { Play, Send, RotateCcw, ChevronDown } from "lucide-react";
 
 import { LANGUAGE_CONFIG } from "../data/problems.js";
 
-
 export default function CodeEditor({
   problem,
   language,
@@ -12,6 +11,7 @@ export default function CodeEditor({
   code,
   setCode,
   onRun,
+  onSubmit,
   socket,
   roomId
 }) {
@@ -153,13 +153,13 @@ useEffect(() => {
 
           </button>
 
-          <button className="btn btn-success">
-
-            <Send size={18} />
-
-            Submit
-
-          </button>
+          <button
+  className="btn btn-success"
+  onClick={onSubmit}
+>
+  <Send size={18} />
+  Submit
+</button>
 
         </div>
 

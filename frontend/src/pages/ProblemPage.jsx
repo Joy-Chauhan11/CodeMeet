@@ -1,5 +1,7 @@
-import { useState ,useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
 
 import Navbar from "../components/Navbar.jsx";
 import ProblemHeader from "../components/ProblemHeader.jsx";
@@ -8,33 +10,35 @@ import CodeEditor from "../components/CodeEditor.jsx";
 import OutputPanel from "../components/outputPannel.jsx";
 import { PROBLEMS } from "../data/problems.js";
 
-const EXECUTION_URL = import.meta.env.VITE_CODE_ENGINE_API;
-
-
-
 import {
   Panel,
   PanelGroup,
   PanelResizeHandle,
 } from "react-resizable-panels";
 
+const EXECUTION_URL = import.meta.env.VITE_CODE_ENGINE_API;
+const JUDGE_URL = import.meta.env.VITE_CODE_ENGINE_API_JUDGE;
+
+
+
 export default function ProblemPage() {
   const { id } = useParams();
+  const { getToken } = useAuth();
 
   const problem = PROBLEMS[id];
 
   const [language, setLanguage] = useState("javascript");
+
   const [code, setCode] = useState(
-  problem.starterCode["javascript"]
-);
-const [output, setOutput] = useState("");
-const [error, setError] = useState("");
-const [isRunning, setIsRunning] = useState(false);
+    problem?.starterCode?.javascript || ""
+  );
 
-const [testResults, setTestResults] = useState(null);
-const [aiReview, setAiReview] = useState(null);
+  const [output, setOutput] = useState("");
+  const [error, setError] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
 
-
+  const [testResults, setTestResults] = useState(null);
+  const [aiReview, setAiReview] = useState(null);
 
   if (!problem) {
     return (
@@ -48,6 +52,11 @@ const [aiReview, setAiReview] = useState(null);
 
 const handleRun = async () => {
   try {
+    setIsRunning(true);
+    setOutput("");
+    setError("");
+    setTestResults(null);
+
     const response = await fetch(EXECUTION_URL, {
       method: "POST",
       headers: {
@@ -65,23 +74,65 @@ const handleRun = async () => {
 
     const result = await response.json();
 
-    console.log(result);
+    console.log("Execution result:", result);
 
-    setIsRunning(false);
-
-if (result.success) {
-    setOutput(result.stdout);
-    setError(result.stderr);
-}
-
-    // Later you'll do:
-    // setOutput(result);
+    if (result.success) {
+      setOutput(result.stdout);
+      setError(result.stderr);
+    } else {
+      setError(result.stderr || "Code execution failed");
+    }
 
   } catch (err) {
-    console.error(err);
+    console.error("Execution error:", err);
+    setError(err.message);
+  } finally {
+    setIsRunning(false);
   }
 };
+// ============ Handle submit button 
 
+const handleSubmit = async () => {
+  try {
+    setIsRunning(true);
+    setError("");
+    setTestResults(null);
+
+    const token = await getToken();
+
+    const response = await axios.post(
+      JUDGE_URL,
+      {
+        language,
+        code,
+        testCases: problem.testCases,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Judge result:", response.data);
+
+    setTestResults(response.data);
+
+  } catch (error) {
+    console.error(
+      "Judge error:",
+      error.response?.data || error
+    );
+
+    setError(
+      error.response?.data?.message ||
+      "Failed to judge code"
+    );
+
+  } finally {
+    setIsRunning(false);
+  }
+};
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-base-100">
 
@@ -158,18 +209,17 @@ if (result.success) {
 
                 <div className="h-full min-h-0">
 
-                  <CodeEditor
-                    problem={problem}
-                    language={language}
-                    setLanguage={setLanguage}
-                    code={code}
-    setCode={setCode}
-    socket={null}
-    roomId={"null"}
-
-    onRun={handleRun}
-    
-                  />
+                <CodeEditor
+  problem={problem}
+  language={language}
+  setLanguage={setLanguage}
+  code={code}
+  setCode={setCode}
+  socket={null}
+  roomId={null}
+  onRun={handleRun}
+  onSubmit={handleSubmit}
+/>
 
                 </div>
 

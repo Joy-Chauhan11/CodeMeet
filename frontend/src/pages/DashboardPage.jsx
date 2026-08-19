@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@clerk/clerk-react";
 
@@ -16,7 +16,7 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const { getToken } = useAuth();
 
-
+const [recentSessions, setRecentSessions] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const [roomConfig, setRoomConfig] = useState({
@@ -49,26 +49,26 @@ export default function DashboardPage() {
     },
   ];
 
-  const recentSessions = [
-    {
-      _id: "11",
-      problem: "Merge Sorted Arrays",
-      difficulty: "easy",
-      createdAt: new Date(),
-    },
-    {
-      _id: "12",
-      problem: "Binary Search",
-      difficulty: "medium",
-      createdAt: new Date(),
-    },
-    {
-      _id: "13",
-      problem: "Reverse Linked List",
-      difficulty: "hard",
-      createdAt: new Date(),
-    },
-  ];
+  // const recentSessions = [
+  //   {
+  //     _id: "11",
+  //     problem: "Merge Sorted Arrays",
+  //     difficulty: "easy",
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     _id: "12",
+  //     problem: "Binary Search",
+  //     difficulty: "medium",
+  //     createdAt: new Date(),
+  //   },
+  //   {
+  //     _id: "13",
+  //     problem: "Reverse Linked List",
+  //     difficulty: "hard",
+  //     createdAt: new Date(),
+  //   },
+  // ];
 
   // ---------------- Functions ----------------
 
@@ -97,6 +97,27 @@ export default function DashboardPage() {
   }
 };
   const isUserInSession = () => false;
+
+
+
+useEffect(() => {
+  const fetchRecentSessions = async () => {
+    const token = await getToken();
+
+    const response = await axios.get(
+      "http://localhost:8080/api/sessions/my-recent",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setRecentSessions(response.data.recentSessions);
+  };
+
+  fetchRecentSessions();
+}, []);
 
   return (
     <>
@@ -141,7 +162,6 @@ export default function DashboardPage() {
 
             <RecentSessions
               sessions={recentSessions}
-              isLoading={false}
             />
 
           </div>
