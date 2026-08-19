@@ -5,22 +5,27 @@ import {
   Loader2,
   ArrowRight,
 } from "lucide-react";
+import axios from "axios";
+import {useUser} from "@clerk/clerk-react"
+
+
+
 
 export default function RecentSessions({
-  sessions = [],
-  isLoading,
-}) {
+  
+sessions}) {
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return (
-      <div className="card bg-base-100 border border-base-300 shadow-md mt-6">
-        <div className="card-body flex justify-center items-center py-16">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-        </div>
-      </div>
-    );
-  }
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="card bg-base-100 border border-base-300 shadow-md mt-6">
+  //       <div className="card-body flex justify-center items-center py-16">
+  //         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="card bg-base-100 border border-base-300 shadow-md mt-6">
@@ -56,8 +61,20 @@ export default function RecentSessions({
               </thead>
 
               <tbody>
+{sessions.map((session) => (
+  <div key={session._id}>
 
-                {sessions.map((session) => (
+    <h3>{session.problem}</h3>
+
+    <p>{session.difficulty}</p>
+
+    <p>
+      {new Date(session.createdAt).toLocaleDateString()}
+    </p>
+
+  </div>
+))}
+                {/* {sessions.map((session) => (
                   <tr
                     key={session._id}
                     className="hover"
@@ -94,7 +111,7 @@ export default function RecentSessions({
                     </td>
 
                   </tr>
-                ))}
+                ))} */}
 
               </tbody>
 

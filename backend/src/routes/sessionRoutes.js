@@ -20,7 +20,7 @@ router.get("/:roomId",protectRoute,getSessionByRoomId)
 
 router.post("/:roomId/join",protectRoute,joinSession)
 
-router.post("/:roomId/end",protectRoute,endSession ) 
+router.post("/:id/end",protectRoute,endSession ) 
 
 
 

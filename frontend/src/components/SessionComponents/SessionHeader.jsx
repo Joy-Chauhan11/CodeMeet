@@ -2,7 +2,8 @@ import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {Copy} from "lucide-react"
 import {toast} from "react-hot-toast"
-
+import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
 
 export default function SessionHeader({ session }) {
   function handleCopy(){
@@ -11,6 +12,28 @@ export default function SessionHeader({ session }) {
 
   }
   const navigate =useNavigate();
+  const { getToken } = useAuth();
+
+  const handleEndSession = async () => {
+  try {
+    const token = await getToken();
+
+    await axios.post(
+      `http://localhost:8080/api/sessions/${session._id}/end`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    navigate("/dashboard");
+
+  } catch (error) {
+    console.error("Failed to end session:", error);
+  }
+};
   return (
     <div className="h-12 px-4 border-b border-base-300 bg-base-200 flex items-center justify-between">
 
@@ -53,9 +76,7 @@ export default function SessionHeader({ session }) {
     </span>
 
     <button className="btn btn-error btn-xs"
-    onClick={()=>{
-      navigate("/dashboard")
-    }}
+    onClick={handleEndSession}
     >
       Leave
     </button>
