@@ -5,7 +5,7 @@ import {
   House,
   UserRound,
 } from "lucide-react";
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, SignInButton,SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
 import logo from "../assets/Subject.svg";
 
 function Navbar() {
@@ -78,19 +78,34 @@ function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-          <button className="btn bg-emerald-300 hidden lg:flex rounded-xl">
-            <span className="text-gray-700  ">Start Session</span>
-          </button>
-
+        
           <div className="avatar">
-            <UserButton
+               <SignedOut>
+                <SignInButton mode="modal">
+          <button className=" px-5 py-2 rounded-xl transition bg-emerald-400">
+           <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
+             Get Started
+             </span>
+          </button>
+        </SignInButton>
+                
+               </SignedOut>
+
+               <SignedIn>
+                <UserButton
               appearance={{
                 elements: {
                   avatarBox:
                     "w-11 h-11 ring-2 ring-primary ring-offset-2 ring-offset-base-100",
                 },
               }}
-            />
+            /> 
+               </SignedIn>
+
+
+              
+           
+            
           </div>
         </div>
       </div>

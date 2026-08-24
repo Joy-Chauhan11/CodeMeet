@@ -22,7 +22,7 @@ if(!isLoaded){
   return (
   <>
     <Routes>
-        <Route path="/" element={!isSignedIn ? <Homepage/> : <Navigate to ={"/dashboard"}/>} />
+        <Route path="/" element={ <Homepage/> } />
         <Route path="/dashboard" element={isSignedIn ? <DashboardPage/> : <Navigate to ={"/"}/>} />
 
         <Route path="/problems" element={isSignedIn ? <ProblemsPage/> : <Navigate to ={"/"}/>} />
@@ -36,4 +36,4 @@ if(!isLoaded){
   )
 }
 
-export default App
+export default App ;

@@ -97,6 +97,9 @@ const [customInput, setCustomInput] = useState("");
     socket.on("disconnect", () => {
       console.log("Socket Disconnected");
     });
+    socket.on("peer-left", () => {
+  console.log("Peer left the room");
+});
 
     return () => {
       socket.disconnect();
@@ -287,14 +290,14 @@ const handleSubmit = async () => {
           {/* Output */}
           <Panel defaultSize={25} minSize={15} maxSize={40}>
             <div className="h-full overflow-hidden">
-              <OutputPanel
+             <OutputPanel
   output={output}
   error={error}
   isRunning={isRunning}
   testResults={testResults}
   aiReview={aiReview}
-  customInput={customInput}
-  setCustomInput={setCustomInput}
+  problem={currentProblem}
+  code={code}
 />
               
             </div>
