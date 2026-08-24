@@ -1,6 +1,7 @@
 import heroImg from "../assets/hero.png";
 import { Link } from "react-router-dom";
-import logo from "../assets/Subject.svg"
+import logo from "../assets/Subject.svg";
+import Navbar  from "../components/navbar.jsx"
 import {
   SignInButton,
   useUser
@@ -13,31 +14,8 @@ function Homepage() {
   return (
     <div className="min-h-screen">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 lg:px-20 py-6">
-     <Link to="/" className="flex items-center gap-2">
-  
-
-  <h1 className="text-3xl font-bold">
-    <span className="text-emerald-400">Code</span><span className="text-white">Meet</span>
-  </h1>
-</Link>
-
-        <div className="hidden md:flex items-center gap-8 ">
-          <Link to="/">Home</Link>
-          <Link to="/problems">Problems</Link>
-          <Link to="/dashboard">Dashboard</Link>
-        </div>
-
-        <SignInButton mode="modal">
-          <button className=" px-5 py-2 rounded-xl transition bg-emerald-400">
-           <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
-
- Get Started</span>
-          </button>
-        </SignInButton>
-      </nav>
-
-      {/* Hero Section */}
+      <Navbar></Navbar>
+     
       <section className="max-w-7xl mx-auto px-8 lg:px-20 py-20">
         <div className="grid lg:grid-cols-2 items-center gap-16">
           {/* Left */}

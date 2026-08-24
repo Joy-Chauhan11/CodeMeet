@@ -260,7 +260,8 @@ const handleSubmit = async () => {
                         error={error}
                         isRunning={isRunning}
                         testResults={testResults}
-                        aiReview={aiReview}
+                        problem={problem}
+                        code={code}
                             />
 
                 </div>

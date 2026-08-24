@@ -17,9 +17,9 @@ const navigate = useNavigate();
           <div className="space-y-5">
 
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-primary/10">
-                <Code2 className="w-7 h-7 text-primary" />
-              </div>
+              <div className="p-3 rounded-xl bg-emerald-500/10">
+  <Code2 className="w-7 h-7 text-emerald-500" />
+</div>
 
               <div>
                 <h1 className="text-4xl font-bold">
@@ -45,7 +45,7 @@ const navigate = useNavigate();
                 Code Execution
               </div>
 
-              <div className="badge badge-accent badge-lg py-4 px-4">
+              <div className="badge bg-sky-800 badge-lg py-4 px-4">
                 AI Feedback
               </div>
 
@@ -57,16 +57,16 @@ const navigate = useNavigate();
 
             <button
               onClick={onCreateSession}
-              className="btn bg-emerald-700 text-gray-32 btn-lg gap-2"
+              className="btn bg-emerald-700 text-gray-32 btn-lg gap-2 px-5"
             >
               <Plus className="w-5 h-5" />
               Create Session
             </button>
             <button
-className="btn bg-emerald-700 text-gray-32 btn-lg gap-2"
+className="btn bg-emerald-700 text-gray-32 btn-lg gap-7"
   onClick={() => navigate("/join-session")}
 >
-  <LogIn className="w-5 h-5" />
+  <LogIn className="w-5 h-5 " />
   Join Session
 </button>
 

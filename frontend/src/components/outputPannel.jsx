@@ -1,16 +1,75 @@
 import { useState } from "react";
+import axios from "axios"
+import { useAuth } from "@clerk/clerk-react";
+
+
 
 export default function OutputPanel({
   output = "",
   error = "",
   isRunning = false,
   testResults = null,
-  aiReview = null,
-  customInput = "",
-  setCustomInput,
+  problem,
+  code
 }) {
   const [activeTab, setActiveTab] = useState("tests");
+const [aiReview, setAiReview] = useState(null);
+const ai_Api = import.meta.env.VITE_AI_BACKEND_API;
+const { getToken } = useAuth();
 
+// const getReview = async () => {
+//   try {
+//     const token = await getToken();
+
+//     const response = await axios.post(
+//       ai_Api,
+//       {
+//         problem,
+//         code,
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+
+//     console.log("AI Review:", response.data);
+
+//     setAiReview(response.data.review);
+
+//   } catch (error) {
+//     console.error("AI Review Error:", error);
+//   }
+// };
+
+const getReview = async () => {
+  try {
+    console.log("Problem sent to AI:", problem);
+    console.log("Code sent to AI:", code);
+
+    const token = await getToken();
+
+    const response = await axios.post(
+      ai_Api,
+      {
+        problem,
+        code,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setAiReview(response.data.review);
+
+  } catch (error) {
+    console.error("AI Review Error:", error);
+  }
+};
+// ...existing code...
   const tabs = [
     { id: "tests", label: "Test Cases" },
     { id: "output", label: "Output" },
@@ -197,10 +256,12 @@ export default function OutputPanel({
       case "ai":
         return (
           <div className="whitespace-pre-wrap">
-            {aiReview || (
-              <span className="text-base-content/50">
-                AI review will appear here.
-              </span>
+            {(<>
+              <p>{aiReview}</p>
+             <button onClick={getReview} className="bg bg-gray-500 w-25 h-10 mt-5">Get Review</button>
+              </>
+            ) || (
+              <button onClick={getReview} className="bg bg-gray-500 w-25 h-10">Get Review</button>
             )}
           </div>
         );
