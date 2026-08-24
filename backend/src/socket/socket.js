@@ -26,6 +26,7 @@ cors: {
         return ;
         }
                 socket.join(roomId);
+                socket.roomId = roomId;
 
         console.log(`User ${socket.id} joined room :${roomId}`);
        socket.on("ready", ({ roomId }) => {
@@ -93,9 +94,13 @@ socket.on("onCode-change",({roomId , position})=>{
     })
 })
 
-        socket.on("disconnect",()=>{
-            console.log("socket disconnected" , socket.id);
-        })
+       socket.on("disconnect", () => {
+  console.log("socket disconnected:", socket.id);
+
+  if (socket.roomId) {
+    socket.to(socket.roomId).emit("peer-left");
+  }
+});
     });
 
 

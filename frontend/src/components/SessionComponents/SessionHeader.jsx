@@ -14,11 +14,35 @@ export default function SessionHeader({ session }) {
   const navigate =useNavigate();
   const { getToken } = useAuth();
 
-  const handleEndSession = async () => {
+//   const handleEndSession = async () => {
+//   try {
+//     const token = await getToken();
+
+//     await axios.post(
+//       `http://localhost:8080/api/sessions/${session._id}/end`,
+//       {},
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+
+//     navigate("/dashboard");
+
+//   } catch (error) {
+//     console.error("Failed to end session:", error);
+//   }
+// };
+
+const handleEndSession = async () => {
+
   try {
     const token = await getToken();
 
-    await axios.post(
+    console.log("Session ID:", session?._id);
+
+    const response = await axios.post(
       `http://localhost:8080/api/sessions/${session._id}/end`,
       {},
       {
@@ -28,12 +52,20 @@ export default function SessionHeader({ session }) {
       }
     );
 
+    console.log("End session response:", response.data);
+
     navigate("/dashboard");
 
   } catch (error) {
-    console.error("Failed to end session:", error);
+    console.error(
+      "END SESSION ERROR:",
+      error.message
+    );
   }
 };
+
+
+
   return (
     <div className="h-12 px-4 border-b border-base-300 bg-base-200 flex items-center justify-between">
 
@@ -75,11 +107,20 @@ export default function SessionHeader({ session }) {
       ⏱ 00:00
     </span>
 
-    <button className="btn btn-error btn-xs"
+    {/* <button className="btn btn-error btn-xs"
     onClick={handleEndSession}
     >
       Leave
-    </button>
+    </button> */}
+    <button
+  className="btn btn-error btn-xs"
+  onClick={() => {
+    console.log("🔥 END SESSION CLICKED");
+    handleEndSession();
+  }}
+>
+  End Session
+</button>
   </div>
 
 </div>

@@ -8,6 +8,7 @@ import { clerkMiddleware } from '@clerk/express'
 import { initializeSocket } from "./socket/socket.js";
 
 import sessionRoutes from "./routes/sessionRoutes.js"
+import aiRoutes from "./routes/aiRouter.js"
 import path from "path"
 import executionRoutes from "./routes/executionRouter.js"
 const __dirname=path.resolve();
@@ -41,6 +42,7 @@ app.use(clerkMiddleware());
 
 app.use("/api/sessions",sessionRoutes)
  app.use("/api", executionRoutes);
+ app.use("/api/ai",aiRoutes)
  
 // if(ENV.NODE_ENV==="production"){
 //     app.use(express.static(path.join(__dirname,"../frontend/dist")));
