@@ -7,7 +7,11 @@ on:
 
 jobs:
   build:
-      runs-on: ubuntu-latest 
+      runs-on: ubuntu-latest
+
+      env: 
+        VITE_API_URL: http://localhost:8080
+ 
       steps: 
         - name: checkout code
           uses: actions/checkout@v4
