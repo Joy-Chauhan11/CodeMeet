@@ -1,0 +1,16 @@
+services :
+     backend :
+       build :
+         context : ./backend
+       container_name : codemeet_backend
+       ports: 
+            - "8080:8080"
+       env_file:
+            - ./backend/.env
+
+     frontend :
+        build : 
+          context : ./frontend
+        container_name : codemeet_frontend
+        ports:
+            - "5173:80" 
