@@ -1,0 +1,24 @@
+name: Codemeet CI
+
+on:
+  push:
+   branches:
+    - main 
+
+jobs:
+  build:
+      runs-on: ubuntu-latest 
+      steps: 
+        - name: checkout code
+          uses: actions/checkout@v4
+
+        - name: Setup Node
+          uses: actions/setup-node@v4
+          with: 
+               node-version:22
+
+        - name:  Install backend dependencies
+          run: npm ci --prefix backend
+        
+        - name: Install frontend dependencies
+          run: npm ci --prefix frontend
