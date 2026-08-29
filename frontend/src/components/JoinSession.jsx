@@ -32,7 +32,7 @@ const handleJoin = async () => {
 
     // First find the session using roomId
     const response = await axios.get(
-      `http://localhost:8080/api/sessions/${roomId.trim()}`,
+      `${import.meta.env.VITE_API_URL}/api/sessions/${roomId.trim()}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +44,7 @@ const handleJoin = async () => {
 
     // Join using MongoDB session _id
     await axios.post(
-`http://localhost:8080/api/sessions/${session.roomId}/join`,
+`${import.meta.env.VITE_API_URL}/api/sessions/${session.roomId}/join`,
       {},
       {
         headers: {

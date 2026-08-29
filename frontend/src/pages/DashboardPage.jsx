@@ -77,7 +77,7 @@ const [recentSessions, setRecentSessions] = useState([]);
     const token = await getToken();
 
     const response = await axios.post(
-      "http://localhost:8080/api/sessions",
+     `${import.meta.env.VITE_API_URL}/api/sessions`,
       {
         problem: roomConfig.problem,
         difficulty: roomConfig.difficulty,
@@ -105,7 +105,7 @@ useEffect(() => {
     const token = await getToken();
 
     const response = await axios.get(
-      "http://localhost:8080/api/sessions/my-recent",
+     `${import.meta.env.VITE_API_URL}/api/sessions/my-recent`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

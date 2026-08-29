@@ -43,7 +43,7 @@ const handleEndSession = async () => {
     console.log("Session ID:", session?._id);
 
     const response = await axios.post(
-      `http://localhost:8080/api/sessions/${session._id}/end`,
+      `${import.meta.env.VITE_API_URL}/api/sessions/${session._id}/end`,
       {},
       {
         headers: {
@@ -115,7 +115,7 @@ const handleEndSession = async () => {
     <button
   className="btn btn-error btn-xs"
   onClick={() => {
-    console.log("🔥 END SESSION CLICKED");
+    console.log("END SESSION CLICKED");
     handleEndSession();
   }}
 >

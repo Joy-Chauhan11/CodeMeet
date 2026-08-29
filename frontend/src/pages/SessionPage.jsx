@@ -54,7 +54,7 @@ const [customInput, setCustomInput] = useState("");
         const token = await getToken();
 
         const response = await axios.get(
-          `http://localhost:8080/api/sessions/${roomId}`,
+          `${import.meta.env.VITE_API_URL}/api/sessions/${roomId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -75,8 +75,7 @@ const [customInput, setCustomInput] = useState("");
   // Socket Connection
   // ==========================
   useEffect(() => {
-    const socket = io("http://localhost:8080");
-   
+const socket = io(import.meta.env.VITE_API_URL);   
     setSocket(socket);
 
     socket.on("connect", () => {
