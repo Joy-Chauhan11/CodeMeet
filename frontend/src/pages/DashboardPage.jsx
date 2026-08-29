@@ -2,7 +2,7 @@ import { useState,useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "@clerk/clerk-react";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar.jsx";
 import WelcomeSection from "../components/WelcomeSection";
 import StatsCards from "../components/StatsCard.jsx";
 import ActiveSessions from "../components/ActiveSessions.jsx";

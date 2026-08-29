@@ -1,7 +1,7 @@
 import heroImg from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import logo from "../assets/Subject.svg";
-import Navbar  from "../components/navbar.jsx"
+import Navbar  from "../components/Navbar.jsx"
 import {
   SignInButton,
   useUser

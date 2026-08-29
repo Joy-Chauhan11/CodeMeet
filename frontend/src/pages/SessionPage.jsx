@@ -6,10 +6,10 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import { PROBLEMS } from "../data/problems";
 
-import Navbar from "../components/Navbar";
-import SessionHeader from "../components/SessionComponents/SessionHeader";
-import ProblemTabs from "../components/ProblemTabs";
-import CodeEditor from "../components/CodeEditor";
+import Navbar from "../components/Navbar.jsx";
+import SessionHeader from "../components/SessionComponents/SessionHeader.jsx";
+import ProblemTabs from "../components/ProblemTabs.jsx";
+import CodeEditor from "../components/CodeEditor.jsx";
 import CollaborationPanel from "../components/SessionComponents/CollaborationPanel";
 import OutputPanel from "../components/outputPannel.jsx";
 
