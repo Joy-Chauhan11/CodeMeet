@@ -1,28 +1,15 @@
-// import dotenv from "dotenv"
-
-// dotenv.config({path: "../../.env",});
-
-// const ENV= {
-//     PORT : process.env.PORT,
-//     NODE_ENV : process.env.NODE_ENV
-// }
-
-// export {ENV}
-
-
 import dotenv from "dotenv";
 
 dotenv.config();
 
 
 const ENV = {
-    PORT: process.env.PORT,
-    NODE_ENV: process.env.NODE_ENV,
-    DB_URL:process.env.DB_URL,
-    client_url:process.env.client_url,
-    CODE_ENGINE_URL : process.env.CODE_ENGINE_URL,
-    GEMINI_API:process.env.GEMINI_API_KEY,
+    PORT: process.env.PORT || 5000,
+    NODE_ENV: process.env.NODE_ENV || "development",
+    DB_URL: process.env.DB_URL,
+    client_url: process.env.client_url,
+    CODE_ENGINE_URL: process.env.CODE_ENGINE_URL,
+    GROQ_API_KEY: process.env.GROQ_API_KEY,
 };
-
 
 export { ENV };

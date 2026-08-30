@@ -61,20 +61,8 @@ sessions}) {
               </thead>
 
               <tbody>
-{sessions.map((session) => (
-  <div key={session._id}>
-
-    <h3>{session.problem}</h3>
-
-    <p>{session.difficulty}</p>
-
-    <p>
-      {new Date(session.createdAt).toLocaleDateString()}
-    </p>
-
-  </div>
-))}
-                {/* {sessions.map((session) => (
+                {/* Rendering recent sessions */}
+                {sessions.map((session) => (
                   <tr
                     key={session._id}
                     className="hover"
@@ -111,7 +99,7 @@ sessions}) {
                     </td>
 
                   </tr>
-                ))} */}
+                ))}
 
               </tbody>
 

@@ -1,4 +1,4 @@
-// data.js
+// LANGUAGE CONFIG
 
 export const LANGUAGE_CONFIG = {
   javascript: {
@@ -21,23 +21,16 @@ export const LANGUAGE_CONFIG = {
 };
 
 
-// ============================================================
 // PROBLEMS
-// ============================================================
 
 export const PROBLEMS = {
 
-  // ==========================================================
   // 1. TWO SUM
-  // ==========================================================
 
   "two-sum": {
     id: "two-sum",
-
     title: "Two Sum",
-
     difficulty: "Easy",
-
     category: "Array • Hash Table",
 
     description: {
@@ -76,74 +69,66 @@ export const PROBLEMS = {
     functionName: "twoSum",
 
     starterCode: {
-
       javascript: `
 function twoSum(nums, target) {
   // Write your solution here
-
 }
-
 `,
 
       python: `
-
 def twoSum(nums, target):
     # Write your solution here
     pass
 `,
 
-      java: `import java.util.*;
+      java: `
+import java.util.*;
 
 class Solution {
-
     public static int[] twoSum(int[] nums, int target) {
         // Write your solution here
-
         return new int[0];
     }
-}`,
+}
+`,
     },
 
-   testCases: [
-  {
-    input: {
-      args: [[2, 7, 11, 15], 9]
-    },
-    expectedOutput: [0, 1]
+    testCases: [
+      {
+        input: {
+          args: [[2, 7, 11, 15], 9],
+        },
+        expectedOutput: [0, 1],
+      },
+
+      {
+        input: {
+          args: [[3, 2, 4], 6],
+        },
+        expectedOutput: [1, 2],
+      },
+
+      {
+        input: {
+          args: [[3, 3], 6],
+        },
+        expectedOutput: [0, 1],
+      },
+    ],
   },
 
-  {
-    input: {
-      args: [[3, 2, 4], 6]
-    },
-    expectedOutput: [1, 2]
-  },
 
-  {
-    input: {
-      args: [[3, 3], 6]
-    },
-    expectedOutput: [0, 1]
-  }
-],
-  },
-
-
-  // ==========================================================
   // 2. REVERSE STRING
-  // ==========================================================
 
   "reverse-string": {
     id: "reverse-string",
-
     title: "Reverse String",
-
     difficulty: "Easy",
-
     category: "String • Two Pointers",
 
     description: {
       text: "Write a function that reverses a string. The input string is given as an array of characters.",
+
       notes: [
         "You must modify the input array in-place.",
         "Do not return a new array.",
@@ -169,89 +154,64 @@ class Solution {
     functionName: "reverseString",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const input = fs.readFileSync(0, "utf8").trim();
-
-const s = input.split("");
-
+      javascript: `
 function reverseString(s) {
   // Write your solution here
-
 }
+`,
 
-reverseString(s);
-
-console.log(JSON.stringify(s));`,
-
-      python: `import sys
-
-s = list(sys.stdin.read().strip())
-
+      python: `
 def reverseString(s):
     # Write your solution here
     pass
+`,
 
-reverseString(s)
-
-print("".join(s))`,
-
-      java: `import java.util.*;
+      java: `
+import java.util.*;
 
 class Solution {
-
     public static void reverseString(char[] s) {
         // Write your solution here
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        String input = scanner.nextLine();
-
-        char[] s = input.toCharArray();
-
-        reverseString(s);
-
-        System.out.println(new String(s));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "hello",
-        expectedOutput: '["o","l","l","e","h"]',
+        input: {
+          args: [["h", "e", "l", "l", "o"]],
+        },
+        expectedOutput: ["o", "l", "l", "e", "h"],
       },
+
       {
-        input: "Hannah",
-        expectedOutput: '["h","a","n","n","a","H"]',
+        input: {
+          args: [["H", "a", "n", "n", "a", "h"]],
+        },
+        expectedOutput: ["h", "a", "n", "n", "a", "H"],
       },
+
       {
-        input: "abc",
-        expectedOutput: '["c","b","a"]',
+        input: {
+          args: [["a", "b", "c"]],
+        },
+        expectedOutput: ["c", "b", "a"],
       },
     ],
   },
 
 
-  // ==========================================================
   // 3. VALID PALINDROME
-  // ==========================================================
 
   "valid-palindrome": {
     id: "valid-palindrome",
-
     title: "Valid Palindrome",
-
     difficulty: "Easy",
-
     category: "String • Two Pointers",
 
     description: {
-      text: "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.",
+      text: "A phrase is a palindrome if, after converting all uppercase letters into lowercase and removing all non-alphanumeric characters, it reads the same forward and backward.",
 
       notes: [
         "Return true if the string is a palindrome.",
@@ -282,76 +242,59 @@ class Solution {
     functionName: "isPalindrome",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const s = fs.readFileSync(0, "utf8").trim();
-
+      javascript: `
 function isPalindrome(s) {
   // Write your solution here
-
 }
+`,
 
-console.log(isPalindrome(s).toString());`,
-
-      python: `import sys
-
-s = sys.stdin.read().strip()
-
+      python: `
 def isPalindrome(s):
     # Write your solution here
     pass
+`,
 
-print(str(isPalindrome(s)).lower())`,
-
-      java: `import java.util.*;
-
+      java: `
 class Solution {
-
     public static boolean isPalindrome(String s) {
         // Write your solution here
         return false;
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        String s = scanner.nextLine();
-
-        System.out.println(isPalindrome(s));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "A man, a plan, a canal: Panama",
-        expectedOutput: "true",
+        input: {
+          args: ["A man, a plan, a canal: Panama"],
+        },
+        expectedOutput: true,
       },
+
       {
-        input: "race a car",
-        expectedOutput: "false",
+        input: {
+          args: ["race a car"],
+        },
+        expectedOutput: false,
       },
+
       {
-        input: " ",
-        expectedOutput: "true",
+        input: {
+          args: [" "],
+        },
+        expectedOutput: true,
       },
     ],
   },
 
 
-  // ==========================================================
   // 4. MAXIMUM SUBARRAY
-  // ==========================================================
 
   "maximum-subarray": {
     id: "maximum-subarray",
-
     title: "Maximum Subarray",
-
     difficulty: "Medium",
-
     category: "Array • Dynamic Programming",
 
     description: {
@@ -367,7 +310,8 @@ class Solution {
       {
         input: "nums = [-2,1,-3,4,-1,2,1,-5,4]",
         output: "6",
-        explanation: "The subarray [4,-1,2,1] has the largest sum of 6.",
+        explanation:
+          "The subarray [4,-1,2,1] has the largest sum of 6.",
       },
       {
         input: "nums = [1]",
@@ -387,93 +331,66 @@ class Solution {
     functionName: "maxSubArray",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const nums = fs.readFileSync(0, "utf8")
-  .trim()
-  .split(/\\s+/)
-  .map(Number);
-
+      javascript: `
 function maxSubArray(nums) {
   // Write your solution here
-
 }
+`,
 
-console.log(maxSubArray(nums).toString());`,
-
-      python: `import sys
-
-nums = list(map(int, sys.stdin.read().split()))
-
+      python: `
 def maxSubArray(nums):
     # Write your solution here
     pass
+`,
 
-print(maxSubArray(nums))`,
-
-      java: `import java.util.*;
-
+      java: `
 class Solution {
-
     public static int maxSubArray(int[] nums) {
         // Write your solution here
         return 0;
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        List<Integer> list = new ArrayList<>();
-
-        while (scanner.hasNextInt()) {
-            list.add(scanner.nextInt());
-        }
-
-        int[] nums = new int[list.size()];
-
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = list.get(i);
-        }
-
-        System.out.println(maxSubArray(nums));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "-2 1 -3 4 -1 2 1 -5 4",
-        expectedOutput: "6",
+        input: {
+          args: [[-2, 1, -3, 4, -1, 2, 1, -5, 4]],
+        },
+        expectedOutput: 6,
       },
+
       {
-        input: "1",
-        expectedOutput: "1",
+        input: {
+          args: [[1]],
+        },
+        expectedOutput: 1,
       },
+
       {
-        input: "5 4 -1 7 8",
-        expectedOutput: "23",
+        input: {
+          args: [[5, 4, -1, 7, 8]],
+        },
+        expectedOutput: 23,
       },
+
       {
-        input: "-5 -2 -8 -1",
-        expectedOutput: "-1",
+        input: {
+          args: [[-5, -2, -8, -1]],
+        },
+        expectedOutput: -1,
       },
     ],
   },
 
 
-  // ==========================================================
   // 5. CONTAINS DUPLICATE
-  // ==========================================================
 
   "contains-duplicate": {
     id: "contains-duplicate",
-
     title: "Contains Duplicate",
-
     difficulty: "Easy",
-
     category: "Array • Hash Table",
 
     description: {
@@ -508,89 +425,61 @@ class Solution {
     functionName: "containsDuplicate",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const nums = fs.readFileSync(0, "utf8")
-  .trim()
-  .split(/\\s+/)
-  .map(Number);
-
+      javascript: `
 function containsDuplicate(nums) {
   // Write your solution here
-
 }
+`,
 
-console.log(containsDuplicate(nums).toString());`,
-
-      python: `import sys
-
-nums = list(map(int, sys.stdin.read().split()))
-
+      python: `
 def containsDuplicate(nums):
     # Write your solution here
     pass
+`,
 
-print(str(containsDuplicate(nums)).lower())`,
-
-      java: `import java.util.*;
+      java: `
+import java.util.*;
 
 class Solution {
-
     public static boolean containsDuplicate(int[] nums) {
         // Write your solution here
         return false;
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        List<Integer> list = new ArrayList<>();
-
-        while (scanner.hasNextInt()) {
-            list.add(scanner.nextInt());
-        }
-
-        int[] nums = new int[list.size()];
-
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = list.get(i);
-        }
-
-        System.out.println(containsDuplicate(nums));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "1 2 3 1",
-        expectedOutput: "true",
+        input: {
+          args: [[1, 2, 3, 1]],
+        },
+        expectedOutput: true,
       },
+
       {
-        input: "1 2 3 4",
-        expectedOutput: "false",
+        input: {
+          args: [[1, 2, 3, 4]],
+        },
+        expectedOutput: false,
       },
+
       {
-        input: "1 1 1 3 3 4 3 2 4 2",
-        expectedOutput: "true",
+        input: {
+          args: [[1, 1, 1, 3, 3, 4, 3, 2, 4, 2]],
+        },
+        expectedOutput: true,
       },
     ],
   },
 
 
-  // ==========================================================
   // 6. BEST TIME TO BUY AND SELL STOCK
-  // ==========================================================
 
   "best-time-to-buy-and-sell-stock": {
     id: "best-time-to-buy-and-sell-stock",
-
     title: "Best Time to Buy and Sell Stock",
-
     difficulty: "Easy",
-
     category: "Array • Greedy",
 
     description: {
@@ -621,89 +510,59 @@ class Solution {
     functionName: "maxProfit",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const prices = fs.readFileSync(0, "utf8")
-  .trim()
-  .split(/\\s+/)
-  .map(Number);
-
+      javascript: `
 function maxProfit(prices) {
   // Write your solution here
-
 }
+`,
 
-console.log(maxProfit(prices).toString());`,
-
-      python: `import sys
-
-prices = list(map(int, sys.stdin.read().split()))
-
+      python: `
 def maxProfit(prices):
     # Write your solution here
     pass
+`,
 
-print(maxProfit(prices))`,
-
-      java: `import java.util.*;
-
+      java: `
 class Solution {
-
     public static int maxProfit(int[] prices) {
         // Write your solution here
         return 0;
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        List<Integer> list = new ArrayList<>();
-
-        while (scanner.hasNextInt()) {
-            list.add(scanner.nextInt());
-        }
-
-        int[] prices = new int[list.size()];
-
-        for (int i = 0; i < prices.length; i++) {
-            prices[i] = list.get(i);
-        }
-
-        System.out.println(maxProfit(prices));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "7 1 5 3 6 4",
-        expectedOutput: "5",
+        input: {
+          args: [[7, 1, 5, 3, 6, 4]],
+        },
+        expectedOutput: 5,
       },
+
       {
-        input: "7 6 4 3 1",
-        expectedOutput: "0",
+        input: {
+          args: [[7, 6, 4, 3, 1]],
+        },
+        expectedOutput: 0,
       },
+
       {
-        input: "2 4 1 7",
-        expectedOutput: "6",
+        input: {
+          args: [[2, 4, 1, 7]],
+        },
+        expectedOutput: 6,
       },
     ],
   },
 
 
-  // ==========================================================
   // 7. FIZZ BUZZ
-  // ==========================================================
 
   "fizz-buzz": {
     id: "fizz-buzz",
-
     title: "Fizz Buzz",
-
     difficulty: "Easy",
-
     category: "Math • String",
 
     description: {
@@ -735,79 +594,78 @@ class Solution {
     functionName: "fizzBuzz",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const n = Number(fs.readFileSync(0, "utf8").trim());
-
+      javascript: `
 function fizzBuzz(n) {
   // Write your solution here
-
 }
+`,
 
-console.log(JSON.stringify(fizzBuzz(n)));`,
-
-      python: `import sys
-
-n = int(sys.stdin.read().strip())
-
+      python: `
 def fizzBuzz(n):
     # Write your solution here
     pass
+`,
 
-print(fizzBuzz(n))`,
-
-      java: `import java.util.*;
+      java: `
+import java.util.*;
 
 class Solution {
-
     public static List<String> fizzBuzz(int n) {
         // Write your solution here
         return new ArrayList<>();
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        int n = scanner.nextInt();
-
-        List<String> result = fizzBuzz(n);
-
-        System.out.println(result);
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "3",
-        expectedOutput: '["1","2","Fizz"]',
+        input: {
+          args: [3],
+        },
+        expectedOutput: ["1", "2", "Fizz"],
       },
+
       {
-        input: "5",
-        expectedOutput: '["1","2","Fizz","4","Buzz"]',
+        input: {
+          args: [5],
+        },
+        expectedOutput: [
+          "1",
+          "2",
+          "Fizz",
+          "4",
+          "Buzz",
+        ],
       },
+
       {
-        input: "10",
-        expectedOutput:
-          '["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz"]',
+        input: {
+          args: [10],
+        },
+        expectedOutput: [
+          "1",
+          "2",
+          "Fizz",
+          "4",
+          "Buzz",
+          "Fizz",
+          "7",
+          "8",
+          "Fizz",
+          "Buzz",
+        ],
       },
     ],
   },
 
 
-  // ==========================================================
   // 8. CLIMBING STAIRS
-  // ==========================================================
 
   "climbing-stairs": {
     id: "climbing-stairs",
-
     title: "Climbing Stairs",
-
     difficulty: "Easy",
-
     category: "Dynamic Programming",
 
     description: {
@@ -837,65 +695,563 @@ class Solution {
     functionName: "climbStairs",
 
     starterCode: {
-
-      javascript: `const fs = require("fs");
-
-const n = Number(fs.readFileSync(0, "utf8").trim());
-
+      javascript: `
 function climbStairs(n) {
   // Write your solution here
-
 }
+`,
 
-console.log(climbStairs(n).toString());`,
-
-      python: `import sys
-
-n = int(sys.stdin.read().strip())
-
+      python: `
 def climbStairs(n):
     # Write your solution here
     pass
+`,
 
-print(climbStairs(n))`,
-
-      java: `import java.util.*;
-
+      java: `
 class Solution {
-
     public static int climbStairs(int n) {
         // Write your solution here
         return 0;
     }
-
-    public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        int n = scanner.nextInt();
-
-        System.out.println(climbStairs(n));
-    }
-}`,
+}
+`,
     },
 
     testCases: [
       {
-        input: "2",
-        expectedOutput: "2",
+        input: {
+          args: [2],
+        },
+        expectedOutput: 2,
       },
+
       {
-        input: "3",
-        expectedOutput: "3",
+        input: {
+          args: [3],
+        },
+        expectedOutput: 3,
       },
+
       {
-        input: "5",
-        expectedOutput: "8",
+        input: {
+          args: [5],
+        },
+        expectedOutput: 8,
       },
+
       {
-        input: "10",
-        expectedOutput: "89",
+        input: {
+          args: [10],
+        },
+        expectedOutput: 89,
       },
     ],
   },
+  "valid-parentheses": {
+  id: "valid-parentheses",
+  title: "Valid Parentheses",
+  difficulty: "Easy",
+  category: "String • Stack",
+
+  description: {
+    text: "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+
+    notes: [
+      "An input string is valid if open brackets are closed by the same type of brackets.",
+      "Open brackets must be closed in the correct order.",
+      "Every close bracket has a corresponding open bracket of the same type.",
+    ],
+  },
+
+  examples: [
+    {
+      input: 's = "()"',
+      output: "true",
+    },
+    {
+      input: 's = "()[]{}"',
+      output: "true",
+    },
+    {
+      input: 's = "(]"',
+      output: "false",
+    },
+  ],
+
+  constraints: [
+    "1 ≤ s.length ≤ 10⁴",
+    "s consists of parentheses only: '()[]{}'.",
+  ],
+
+  functionName: "isValid",
+
+  starterCode: {
+    javascript: `
+function isValid(s) {
+  // Write your solution here
+}
+`,
+
+    python: `
+def isValid(s):
+    # Write your solution here
+    pass
+`,
+
+    java: `
+import java.util.*;
+
+class Solution {
+    public static boolean isValid(String s) {
+        // Write your solution here
+        return false;
+    }
+}
+`,
+  },
+
+  testCases: [
+    {
+      input: {
+        args: ["()"],
+      },
+      expectedOutput: true,
+    },
+
+    {
+      input: {
+        args: ["()[]{}"],
+      },
+      expectedOutput: true,
+    },
+
+    {
+      input: {
+        args: ["(]"],
+      },
+      expectedOutput: false,
+    },
+
+    {
+      input: {
+        args: ["([{}])"],
+      },
+      expectedOutput: true,
+    },
+
+    {
+      input: {
+        args: ["([)]"],
+      },
+      expectedOutput: false,
+    },
+  ],
+},
+
+"merge-sorted-arrays": {
+  id: "merge-sorted-arrays",
+  title: "Merge Sorted Arrays",
+  difficulty: "Easy",
+  category: "Array • Two Pointers",
+
+  description: {
+    text: "You are given two integer arrays nums1 and nums2, sorted in non-decreasing order. Merge nums2 into nums1 so that nums1 becomes one sorted array.",
+
+    notes: [
+      "nums1 has enough space to hold all elements from nums1 and nums2.",
+      "The first m elements of nums1 contain the actual values.",
+      "The last n elements of nums1 are initialized with 0 and should be ignored.",
+      "The final merged array must be stored inside nums1.",
+    ],
+  },
+
+  examples: [
+    {
+      input: "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+      output: "[1,2,2,3,5,6]",
+    },
+    {
+      input: "nums1 = [1], m = 1, nums2 = [], n = 0",
+      output: "[1]",
+    },
+    {
+      input: "nums1 = [0], m = 0, nums2 = [1], n = 1",
+      output: "[1]",
+    },
+  ],
+
+  constraints: [
+    "0 ≤ m, n ≤ 200",
+    "1 ≤ m + n ≤ 200",
+    "nums1.length == m + n",
+    "nums2.length == n",
+    "-10⁹ ≤ nums1[i], nums2[j] ≤ 10⁹",
+    "nums1 and nums2 are sorted in non-decreasing order.",
+  ],
+
+  functionName: "merge",
+
+  starterCode: {
+    javascript: `
+function merge(nums1, m, nums2, n) {
+  // Write your solution here
+}
+`,
+
+    python: `
+def merge(nums1, m, nums2, n):
+    # Write your solution here
+    pass
+`,
+
+    java: `
+import java.util.*;
+
+class Solution {
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        // Write your solution here
+    }
+}
+`,
+  },
+
+  testCases: [
+    {
+      input: {
+        args: [[1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3],
+      },
+      expectedOutput: [1, 2, 2, 3, 5, 6],
+    },
+
+    {
+      input: {
+        args: [[1], 1, [], 0],
+      },
+      expectedOutput: [1],
+    },
+
+    {
+      input: {
+        args: [[0], 0, [1], 1],
+      },
+      expectedOutput: [1],
+    },
+
+    {
+      input: {
+        args: [[2, 0], 1, [1], 1],
+      },
+      expectedOutput: [1, 2],
+    },
+  ],
+},
+
+"binary-search": {
+  id: "binary-search",
+  title: "Binary Search",
+  difficulty: "Easy",
+  category: "Array • Binary Search",
+
+  description: {
+    text: "Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search for target in nums. If target exists, return its index. Otherwise, return -1.",
+
+    notes: [
+      "The array contains distinct integers.",
+      "The array is sorted in ascending order.",
+      "Return the index of target if it exists.",
+      "Return -1 if target does not exist.",
+    ],
+  },
+
+  examples: [
+    {
+      input: "nums = [-1,0,3,5,9,12], target = 9",
+      output: "4",
+    },
+    {
+      input: "nums = [-1,0,3,5,9,12], target = 2",
+      output: "-1",
+    },
+    {
+      input: "nums = [5], target = 5",
+      output: "0",
+    },
+  ],
+
+  constraints: [
+    "1 ≤ nums.length ≤ 10⁴",
+    "-10⁴ ≤ nums[i], target ≤ 10⁴",
+    "All integers in nums are distinct.",
+    "nums is sorted in ascending order.",
+  ],
+
+  functionName: "search",
+
+  starterCode: {
+    javascript: `
+function search(nums, target) {
+  // Write your solution here
+}
+`,
+
+    python: `
+def search(nums, target):
+    # Write your solution here
+    pass
+`,
+
+    java: `
+import java.util.*;
+
+class Solution {
+    public static int search(int[] nums, int target) {
+        // Write your solution here
+        return -1;
+    }
+}
+`,
+  },
+
+  testCases: [
+    {
+      input: {
+        args: [[-1, 0, 3, 5, 9, 12], 9],
+      },
+      expectedOutput: 4,
+    },
+
+    {
+      input: {
+        args: [[-1, 0, 3, 5, 9, 12], 2],
+      },
+      expectedOutput: -1,
+    },
+
+    {
+      input: {
+        args: [[5], 5],
+      },
+      expectedOutput: 0,
+    },
+
+    {
+      input: {
+        args: [[1, 3, 5, 7, 9], 1],
+      },
+      expectedOutput: 0,
+    },
+
+    {
+      input: {
+        args: [[1, 3, 5, 7, 9], 9],
+      },
+      expectedOutput: 4,
+    },
+  ],
+},
+
+
+"reverse-linked-list": {
+  id: "reverse-linked-list",
+  title: "Reverse Linked List",
+  difficulty: "Easy",
+  category: "Linked List • Recursion",
+
+  description: {
+    text: "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+
+    notes: [
+      "The linked list is singly linked.",
+      "Return the new head of the reversed linked list.",
+      "You may solve the problem iteratively or recursively.",
+    ],
+  },
+
+  examples: [
+    {
+      input: "head = [1,2,3,4,5]",
+      output: "[5,4,3,2,1]",
+    },
+    {
+      input: "head = [1,2]",
+      output: "[2,1]",
+    },
+    {
+      input: "head = []",
+      output: "[]",
+    },
+  ],
+
+  constraints: [
+    "The number of nodes in the list is in the range [0, 5000].",
+    "-5000 ≤ Node.val ≤ 5000",
+  ],
+
+  functionName: "reverseList",
+
+  starterCode: {
+    javascript: `
+function reverseList(head) {
+  // Write your solution here
+}
+`,
+
+    python: `
+def reverseList(head):
+    # Write your solution here
+    pass
+`,
+
+    java: `
+class Solution {
+    public static ListNode reverseList(ListNode head) {
+        // Write your solution here
+        return null;
+    }
+}
+`,
+  },
+
+  testCases: [
+    {
+      input: {
+        args: [[1, 2, 3, 4, 5]],
+      },
+      expectedOutput: [5, 4, 3, 2, 1],
+    },
+
+    {
+      input: {
+        args: [[1, 2]],
+      },
+      expectedOutput: [2, 1],
+    },
+
+    {
+      input: {
+        args: [[]],
+      },
+      expectedOutput: [],
+    },
+
+    {
+      input: {
+        args: [[1]],
+      },
+      expectedOutput: [1],
+    },
+  ],
+},
+
+
+"longest-substring-without-repeating-characters": {
+  id: "longest-substring-without-repeating-characters",
+  title: "Longest Substring Without Repeating Characters",
+  difficulty: "Medium",
+  category: "String • Sliding Window",
+
+  description: {
+    text: "Given a string s, find the length of the longest substring without repeating characters.",
+
+    notes: [
+      "A substring is a contiguous sequence of characters within the string.",
+      "The substring must contain no repeated characters.",
+      "Return the length of the longest such substring.",
+    ],
+  },
+
+  examples: [
+    {
+      input: 's = "abcabcbb"',
+      output: "3",
+      explanation: 'The answer is "abc", with a length of 3.',
+    },
+    {
+      input: 's = "bbbbb"',
+      output: "1",
+      explanation: 'The answer is "b", with a length of 1.',
+    },
+    {
+      input: 's = "pwwkew"',
+      output: "3",
+      explanation: 'The answer is "wke", with a length of 3.',
+    },
+  ],
+
+  constraints: [
+    "0 ≤ s.length ≤ 5 × 10⁴",
+    "s consists of English letters, digits, symbols and spaces.",
+  ],
+
+  functionName: "lengthOfLongestSubstring",
+
+  starterCode: {
+    javascript: `
+function lengthOfLongestSubstring(s) {
+  // Write your solution here
+}
+`,
+
+    python: `
+def lengthOfLongestSubstring(s):
+    # Write your solution here
+    pass
+`,
+
+    java: `
+import java.util.*;
+
+class Solution {
+    public static int lengthOfLongestSubstring(String s) {
+        // Write your solution here
+        return 0;
+    }
+}
+`,
+  },
+
+  testCases: [
+    {
+      input: {
+        args: ["abcabcbb"],
+      },
+      expectedOutput: 3,
+    },
+
+    {
+      input: {
+        args: ["bbbbb"],
+      },
+      expectedOutput: 1,
+    },
+
+    {
+      input: {
+        args: ["pwwkew"],
+      },
+      expectedOutput: 3,
+    },
+
+    {
+      input: {
+        args: [""],
+      },
+      expectedOutput: 0,
+    },
+
+    {
+      input: {
+        args: [" "],
+      },
+      expectedOutput: 1,
+    },
+
+    {
+      input: {
+        args: ["au"],
+      },
+      expectedOutput: 2,
+    },
+  ],
+},
 };

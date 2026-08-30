@@ -17,32 +17,7 @@ const [aiReview, setAiReview] = useState(null);
 const ai_Api = import.meta.env.VITE_AI_BACKEND_API;
 const { getToken } = useAuth();
 
-// const getReview = async () => {
-//   try {
-//     const token = await getToken();
-
-//     const response = await axios.post(
-//       ai_Api,
-//       {
-//         problem,
-//         code,
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
-
-//     console.log("AI Review:", response.data);
-
-//     setAiReview(response.data.review);
-
-//   } catch (error) {
-//     console.error("AI Review Error:", error);
-//   }
-// };
-
+// Fetching AI code review from the backend
 const getReview = async () => {
   try {
     console.log("Problem sent to AI:", problem);
@@ -69,7 +44,6 @@ const getReview = async () => {
     console.error("AI Review Error:", error);
   }
 };
-// ...existing code...
   const tabs = [
     { id: "tests", label: "Test Cases" },
     { id: "output", label: "Output" },
@@ -90,9 +64,7 @@ const getReview = async () => {
     }
 
     switch (activeTab) {
-      // =========================
-      // TEST CASES
-      // =========================
+// Taste cases
       case "tests":
         if (!testResults) {
           return (
@@ -209,9 +181,9 @@ const getReview = async () => {
           </div>
         );
 
-      // =========================
-      // OUTPUT
-      // =========================
+
+// output
+
      case "output":
   return (
     <div className="h-full flex flex-col gap-4">
@@ -240,19 +212,14 @@ const getReview = async () => {
     </div>
   );
 
-      // =========================
-      // CONSOLE
-      // =========================
-      case "console":
-        return (
-          <pre className="whitespace-pre-wrap wrap-break-words font-mono text-sm">
-            {output || "Console output will appear here."}
-          </pre>
-        );
+      // case "console":
+      //   return (
+      //     <pre className="whitespace-pre-wrap wrap-break-words font-mono text-sm">
+      //       {output || "Console output will appear here."}
+      //     </pre>
+      //   );
 
-      // =========================
-      // AI REVIEW
-      // =========================
+    //  Ai review
       case "ai":
         return (
           <div className="whitespace-pre-wrap">

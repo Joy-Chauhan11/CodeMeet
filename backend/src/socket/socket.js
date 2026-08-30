@@ -61,15 +61,7 @@ socket.on("answer", ({ roomId, answer }) => {
     });
 });
 
-// socket.on("receive-offer", async ({ offer }) => {
-
-//     console.log("Offer Received");
-
-//     await peerConnection.current.setRemoteDescription(offer);
-
-//     await createAnswer();
-
-// });
+// WebRTC signaling: Ice candidates are sent to establish peer connection
 socket.on("ice-candidate", ({ roomId, candidate }) => {
     socket.to(roomId).emit("receive-ice-candidate", {
         candidate,

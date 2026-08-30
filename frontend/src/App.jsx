@@ -1,9 +1,6 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import {
-  SignedIn,SignedOut,SignInButton,SignUpButton,SignOutButton, UserButton,
-  useUser,
-} from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 import Homepage from './pages/HomePage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import ProblemsPage from './pages/ProblemsPage.jsx';

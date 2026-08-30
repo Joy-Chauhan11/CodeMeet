@@ -30,7 +30,7 @@ app.use(
   cors({
     origin: [
       ENV.client_url, 
-               // Local React app
+               
     ],
     credentials: true
   })

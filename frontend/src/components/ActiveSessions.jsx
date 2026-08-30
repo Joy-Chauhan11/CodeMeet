@@ -76,7 +76,7 @@ export default function ActiveSessions({
                   </div>
 
                   <button
-                    onClick={() => navigate(`/session/${session._id}`)}
+                    onClick={() => navigate(`/api/sessions/${session.roomId}`)}
                     className={`btn ${
                       isUserInSession(session)
                         ? "btn-primary"

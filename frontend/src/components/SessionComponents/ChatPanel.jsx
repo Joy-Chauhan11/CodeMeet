@@ -12,9 +12,7 @@ export default function ChatPanel({
   
   const bottomRef = useRef(null);
 
-  // ==========================
   // Receive Messages
-  // ==========================
   useEffect(() => {
   if (!socket) return;
 
@@ -29,18 +27,13 @@ export default function ChatPanel({
   };
 }, [socket, setMessages]);
 
-  // ==========================
-  // Auto Scroll
-  // ==========================
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
       behavior: "smooth",
     });
   }, [messages]);
 
-  // ==========================
   // Send Message
-  // ==========================
   const sendMessage = () => {
     if (!socket) return;
 
@@ -61,9 +54,7 @@ export default function ChatPanel({
     setMessage("");
   };
 
-  // ==========================
   // Enter Key
-  // ==========================
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
@@ -73,13 +64,13 @@ export default function ChatPanel({
   return (
     <div className="h-full flex flex-col bg-base-100">
 
-      {/* ================= Messages ================= */}
+      {/* Messages*/}
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
 
         {messages.length === 0 && (
           <div className="h-full flex items-center justify-center text-base-content/50">
-            No messages yet 👋
+            No messages yet 
           </div>
         )}
 
@@ -128,7 +119,7 @@ export default function ChatPanel({
 
       </div>
 
-      {/* ================= Input ================= */}
+      {/* Input */}
 
       <div className="border-t border-base-300 p-3">
 
