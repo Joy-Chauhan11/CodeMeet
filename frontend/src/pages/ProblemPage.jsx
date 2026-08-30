@@ -90,7 +90,7 @@ const handleRun = async () => {
     setIsRunning(false);
   }
 };
-// ============ Handle submit button 
+//  Handle submit button 
 
 const handleSubmit = async () => {
   try {
@@ -100,20 +100,20 @@ const handleSubmit = async () => {
 
     const token = await getToken();
 
-    const response = await axios.post(
-      JUDGE_URL,
-      {
-        language,
-        code,
-        testCases: problem.testCases,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
+   const response = await axios.post(
+  JUDGE_URL,
+  {
+    language,
+    code,
+    functionName: problem.functionName,
+    testCases: problem.testCases,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
     console.log("Judge result:", response.data);
 
     setTestResults(response.data);
@@ -147,7 +147,7 @@ const handleSubmit = async () => {
           className="h-full"
         >
 
-          {/* ================= LEFT PANEL ================= */}
+          {/* LEFT PANEL*/}
 
           <Panel
             defaultSize={32}
@@ -177,7 +177,7 @@ const handleSubmit = async () => {
               left-1/2
               top-0
               h-full
-\              -translate-x-1/2
+              -translate-x-1/2
               bg-primary
               opacity-0
               transition-opacity
@@ -188,7 +188,7 @@ const handleSubmit = async () => {
 
           </PanelResizeHandle>
 
-          {/* ================= RIGHT PANEL ================= */}
+          {/* RIGHT PANEL */}
 
           <Panel
             defaultSize={68}

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
-import { LogIn } from "lucide-react";
 
 
 
@@ -30,7 +29,7 @@ const handleJoin = async () => {
 
     const token = await getToken();
 
-    // First find the session using roomId
+    //  finding the session using roomId
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/sessions/${roomId.trim()}`,
       {
@@ -53,7 +52,7 @@ const handleJoin = async () => {
       }
     );
 
-    // Now enter the session
+    //  enter the session
     navigate(`/api/sessions/${session.roomId}`);
 
   } catch (error) {

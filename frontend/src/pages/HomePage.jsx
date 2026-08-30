@@ -2,10 +2,7 @@ import heroImg from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import logo from "../assets/Subject.svg";
 import Navbar  from "../components/Navbar.jsx"
-import {
-  SignInButton,
-  useUser
-} from "@clerk/clerk-react";
+;
 
 import {ArrowRightIcon, VideoIcon,Code2Icon ,UsersIcon} from "lucide-react"
 

@@ -31,9 +31,7 @@ const toggleFullscreen = async (videoRef, type) => {
     setFullscreenVideo(type);
   }
 };
-  // ==========================
   // Create Offer
-  // ==========================
   const createOffer = async () => {
     if (!peerConnection.current) return;
 
@@ -51,9 +49,8 @@ const toggleFullscreen = async (videoRef, type) => {
     console.log("Offer Sent");
   };
 
-  // ==========================
+  
   // Create Answer
-  // ==========================
   const createAnswer = async () => {
     if (!peerConnection.current) return;
 
@@ -71,9 +68,7 @@ const toggleFullscreen = async (videoRef, type) => {
     console.log("Answer Sent");
   };
 
-  // ==========================
   // Start Camera
-  // ==========================
   useEffect(() => {
     let stream;
 
@@ -139,9 +134,8 @@ const toggleFullscreen = async (videoRef, type) => {
     };
   }, [socket, roomId]);
 
-  // ==========================
+  
   // Receive Offer
-  // ==========================
   useEffect(() => {
     if (!socket) return;
 
@@ -165,9 +159,8 @@ const toggleFullscreen = async (videoRef, type) => {
     };
   }, [socket]);
 
-  // ==========================
   // Receive Answer
-  // ==========================
+  
   useEffect(() => {
     if (!socket) return;
 
@@ -189,9 +182,7 @@ const toggleFullscreen = async (videoRef, type) => {
     };
   }, [socket]);
 
-  // ==========================
   // Receive ICE
-  // ==========================
   useEffect(() => {
     if (!socket) return;
 
@@ -215,9 +206,7 @@ const toggleFullscreen = async (videoRef, type) => {
     };
   }, [socket]);
 
-  // ==========================
   // User Joined
-  // ==========================
   useEffect(() => {
 
     if (!socket) return;

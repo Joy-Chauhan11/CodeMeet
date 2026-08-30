@@ -45,9 +45,7 @@ const [testResults, setTestResults] = useState(null);
 const [aiReview, setAiReview] = useState(null);
 const [customInput, setCustomInput] = useState("");
 
-  // ==========================
   // Fetch Session
-  // ==========================
   useEffect(() => {
     const loadSession = async () => {
       try {
@@ -71,9 +69,7 @@ const [customInput, setCustomInput] = useState("");
     loadSession();
   }, [roomId, getToken]);
 
-  // ==========================
   // Socket Connection
-  // ==========================
   useEffect(() => {
 const socket = io(import.meta.env.VITE_API_URL);   
     setSocket(socket);
@@ -137,7 +133,7 @@ if (!currentProblem) {
 
 
 
-  // ======On Run
+  // On Run
 const handleRun = async () => {
   try {
     setIsRunning(true);
@@ -183,7 +179,7 @@ const handleRun = async () => {
 };
 
 
-// ============== handle submit function
+// handle submit function
 const handleSubmit = async () => {
   try {
     setIsRunning(true);
@@ -192,19 +188,20 @@ const handleSubmit = async () => {
 
     const token = await getToken();
 
-    const response = await axios.post(
-      EXECUTION_URL_JUDGE,
-      {
-        language,
-        code,
-        testCases: currentProblem.testCases,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+   const response = await axios.post(
+  EXECUTION_URL_JUDGE,
+  {
+    language,
+    code,
+    functionName: currentProblem.functionName,
+    testCases: currentProblem.testCases,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
     console.log("Judge result:", response.data);
 
@@ -221,9 +218,7 @@ const handleSubmit = async () => {
     setIsRunning(false);
   }
 };
-  // ==========================
-  // UI
-  // ==========================
+
   return (
   <div className="h-screen flex flex-col bg-base-300">
 
@@ -234,7 +229,6 @@ const handleSubmit = async () => {
     {/* Main Layout */}
     <PanelGroup direction="horizontal" className="flex-1">
 
-      {/* ================= LEFT WORKSPACE ================= */}
       <Panel defaultSize={75} minSize={50}>
 
         <PanelGroup direction="vertical">
@@ -308,7 +302,7 @@ const handleSubmit = async () => {
 
       <PanelResizeHandle className="w-1 bg-base-300 hover:bg-primary cursor-col-resize transition-colors" />
 
-      {/* ================= RIGHT COLLABORATION ================= */}
+      {/* RIGHT COLLABORATION  */}
       <Panel defaultSize={25} minSize={20} maxSize={40}>
         <div className="h-full overflow-hidden">
           <CollaborationPanel
