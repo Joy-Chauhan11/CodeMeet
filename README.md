@@ -135,16 +135,16 @@ CodeMeet is composed of multiple independent services.
               │                     │                     │
               ▼                     ▼                     ▼
         ┌───────────┐        ┌─────────────┐       ┌────────────┐
-        │  MongoDB  │        │    Clerk     │       │ Gemini AI  │
-        │           │        │    Auth      │       │Code Review │
+        │  MongoDB  │        │    Clerk    │       │ Gemini AI  │
+        │           │        │    Auth     │       │Code Review │
         └───────────┘        └─────────────┘       └────────────┘
 
                                     │
                                     │ HTTP
                                     ▼
                          ┌──────────────────────┐
-                         │     Code Engine        │
-                         │     REST API            │
+                         │     Code Engine      │
+                         │     REST API         │
                          └──────────┬───────────┘
                                     │
                                     ▼
