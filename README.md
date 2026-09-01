@@ -1,6 +1,17 @@
 # CodeMeet
 
-A real-time collaborative coding platform that enables developers to solve programming problems together, communicate through a shared workspace, execute code, submit solutions, and receive AI-powered feedback.
+A real-time collaborative coding platform that enables developers to solve programming problems together, communicate through video calls, screen sharing, and a shared workspace, execute code, submit solutions, and receive AI-powered feedback.
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=webrtc&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Clerk](https://img.shields.io/badge/Clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
 
 ---
 
@@ -8,9 +19,7 @@ A real-time collaborative coding platform that enables developers to solve progr
 
 CodeMeet is a full-stack collaborative coding platform designed for pair programming, coding practice, technical interviews, and collaborative problem-solving.
 
-Two participants can join the same coding session and work together in real time — editing code simultaneously, communicating through an integrated chat, executing and submitting solutions, and receiving AI-generated feedback on their work.
-
-The platform is built with a React frontend, a Node.js/Express backend, MongoDB for persistence, Clerk for authentication, Socket.IO for real-time communication, a dedicated Docker-based code execution engine, and Gemini for AI-powered code review.
+Two participants can join the same coding session and work together in real time — editing code simultaneously, communicating through an integrated chat and live video call, sharing their screen, executing and submitting solutions, and receiving AI-generated feedback on their work.
 
 ---
 
@@ -23,7 +32,6 @@ The platform is built with a React frontend, a Node.js/Express backend, MongoDB 
 - Support for two users collaborating within the same session
 - Real-time code synchronization via Socket.IO
 - Real-time programming language synchronization
-- Cursor position synchronization
 - Session-based collaborative workspace
 
 ### Real-Time Chat
@@ -31,6 +39,14 @@ The platform is built with a React frontend, a Node.js/Express backend, MongoDB 
 - Built-in session chat
 - Real-time message delivery between participants
 - Message synchronization via Socket.IO
+
+### Video Call & Screen Share
+
+- Peer-to-peer video calling within a coding session, powered by WebRTC
+- In-session screen sharing
+- Socket.IO used for signaling (offer/answer exchange and ICE candidate negotiation)
+- Toggle camera and microphone during a session
+- Seamless alongside the shared code editor and chat
 
 ### Online Code Editor
 
@@ -115,46 +131,52 @@ Completed sessions are persisted and surfaced in the user's recent session histo
 
 ## Architecture
 
-CodeMeet is composed of multiple independent services.
+CodeMeet is composed of multiple independent services communicating over HTTP and WebSockets.
 
+```mermaid
+flowchart TD
+    ClientA["Participant A\n(React App)"]
+    ClientB["Participant B\n(React App)"]
+
+    subgraph Backend["CodeMeet Backend — Node.js / Express"]
+        API["REST API"]
+        WS["Socket.IO Server\n(signaling + real-time sync)"]
+    end
+
+    DB[("MongoDB")]
+    Auth["Clerk Auth"]
+    AI["Gemini AI\nCode Review"]
+
+    subgraph Engine["Code Execution Engine"]
+        EngineAPI["REST API"]
+        Docker["Docker Containers\n(sandboxed execution)"]
+    end
+
+    ClientA -- "HTTP" --> API
+    ClientB -- "HTTP" --> API
+    ClientA -- "WebSocket" --> WS
+    ClientB -- "WebSocket" --> WS
+
+    ClientA <-. "WebRTC\nvideo / screen share (P2P)" .-> ClientB
+
+    API --> DB
+    API --> Auth
+    API --> AI
+    API -- "HTTP" --> EngineAPI
+    WS --> API
+
+    EngineAPI --> Docker
+    Docker -- "stdout / stderr / verdict" --> EngineAPI
+    EngineAPI -- "execution result" --> API
 ```
-                         ┌──────────────────────┐
-                         │      React App        │
-                         │        (Vite)          │
-                         └──────────┬───────────┘
-                                    │
-                     HTTP / Socket.IO
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │   CodeMeet Backend    │
-                         │   Node.js / Express    │
-                         └──────────┬───────────┘
-                                    │
-              ┌─────────────────────┼─────────────────────┐
-              │                     │                     │
-              ▼                     ▼                     ▼
-        ┌───────────┐        ┌─────────────┐       ┌────────────┐
-        │  MongoDB  │        │    Clerk    │       │ Gemini AI  │
-        │           │        │    Auth     │       │Code Review │
-        └───────────┘        └─────────────┘       └────────────┘
 
-                                    │
-                                    │ HTTP
-                                    ▼
-                         ┌──────────────────────┐
-                         │     Code Engine      │
-                         │     REST API         │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                              ┌───────────┐
-                              │  Docker   │
-                              │Containers │
-                              └───────────┘
-```
+**Flow summary:**
 
-The React frontend communicates with the backend over HTTP and Socket.IO for real-time features. The backend integrates with MongoDB for data persistence, Clerk for authentication, and Gemini for AI-generated code review. Code execution and judging are delegated to a separate Code Engine service, which runs submissions inside isolated Docker containers and returns results to the backend.
+1. Both participants' clients talk to the backend over HTTP for standard requests and over Socket.IO for real-time features (live code sync, cursor position, chat, and WebRTC signaling).
+2. Once a WebRTC connection is negotiated through Socket.IO signaling, video and screen-share media streams flow directly peer-to-peer between participants — the backend is not in the media path.
+3. The backend persists session and user data in MongoDB, authenticates requests through Clerk, and requests AI feedback from Gemini.
+4. Code execution and judging are delegated to a separate Code Engine service, which runs submissions inside isolated Docker containers and returns `stdout`/`stderr` and verdicts back to the backend.
+
 
 ---
 
@@ -167,11 +189,15 @@ The React frontend communicates with the backend over HTTP and Socket.IO for rea
 | Database | MongoDB |
 | Authentication | Clerk |
 | Real-Time Communication | Socket.IO |
+| Video Call & Screen Share | WebRTC |
 | Code Execution | Docker-based Code Engine |
 | AI Code Review | Gemini |
 | Code Editor | Monaco Editor |
 
 ---
+## Related Repositories
+
+- [CodeEngine](https://github.com/Joy-Chauhan11/code-engine) — the Docker-based code execution and judging engine used by CodeMeet
 
 ## Getting Started
 
@@ -186,7 +212,7 @@ The React frontend communicates with the backend over HTTP and Socket.IO for rea
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/codemeet.git
+git clone https://github.com/Joy-Chauhan11/CodeMeet.git
 cd codemeet
 ```
 
@@ -194,11 +220,11 @@ Install dependencies for each service:
 
 ```bash
 # Frontend
-cd client
+cd frontend
 npm install
 
 # Backend
-cd ../server
+cd backend
 npm install
 ```
 
@@ -218,15 +244,15 @@ Create a `.env` file in the backend directory with the required configuration va
 
 ```bash
 # Start the backend
-cd server
+cd backend
 npm start
 
 # Start the frontend
-cd client
+cd frontend
 npm run dev
 ```
 
-The Code Execution Engine must be running separately and reachable at the URL configured in `CODE_ENGINE_URL`. Refer to the Code Engine's own README for setup instructions.
+The Code Execution Engine must be running separately and reachable at the URL configured in [CodeEngine](https://github.com/Joy-Chauhan11/code-engine). Refer to the Code Engine's own README for setup instructions.
 
 ---
 
@@ -235,7 +261,8 @@ The Code Execution Engine must be running separately and reachable at the URL co
 - Support for sessions with more than two participants
 - Persistent code history and version snapshots per session
 - Expanded language support
-- In-session video/voice communication
+- Group calls / support for more than two participants in video sessions
+- Session recording and playback
 - Public problem library and difficulty filtering
 
 ---
