@@ -1,0 +1,108 @@
+<svg viewBox="0 0 1180 760" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4b5563" />
+    </marker>
+    <marker id="arrowDashed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9333ea" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1180" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="590" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">CodeMeet — System Architecture</text>
+
+  <!-- Client A -->
+  <rect x="60" y="80" width="220" height="70" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="170" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">Participant A</text>
+  <text x="170" y="128" text-anchor="middle" font-size="12" fill="#1e40af">React App (Vite)</text>
+
+  <!-- Client B -->
+  <rect x="900" y="80" width="220" height="70" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1010" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">Participant B</text>
+  <text x="1010" y="128" text-anchor="middle" font-size="12" fill="#1e40af">React App (Vite)</text>
+
+  <!-- WebRTC P2P link -->
+  <path d="M280,100 C 480,40 700,40 900,100" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrowDashed)" marker-start="url(#arrowDashed)"/>
+  <rect x="470" y="35" width="240" height="34" rx="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1"/>
+  <text x="590" y="57" text-anchor="middle" font-size="12" font-weight="600" fill="#6b21a8">WebRTC — video / screen share (P2P)</text>
+
+  <!-- Backend group -->
+  <rect x="330" y="220" width="520" height="150" rx="12" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="590" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#374151">CodeMeet Backend — Node.js / Express</text>
+
+  <rect x="360" y="260" width="200" height="80" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="460" y="292" text-anchor="middle" font-size="13" font-weight="600" fill="#065f46">REST API</text>
+  <text x="460" y="310" text-anchor="middle" font-size="11" fill="#047857">Auth, sessions, routing</text>
+
+  <rect x="620" y="260" width="200" height="80" rx="8" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="720" y="288" text-anchor="middle" font-size="13" font-weight="600" fill="#9a3412">Socket.IO Server</text>
+  <text x="720" y="306" text-anchor="middle" font-size="11" fill="#c2410c">Signaling + real-time sync</text>
+  <text x="720" y="322" text-anchor="middle" font-size="11" fill="#c2410c">(code, chat, cursor)</text>
+
+  <!-- Client -> Backend arrows -->
+  <path d="M170,150 L460,260" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="255" y="200" font-size="11" fill="#4b5563">HTTP</text>
+
+  <path d="M1010,150 L720,260" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="880" y="200" font-size="11" fill="#4b5563">WebSocket</text>
+
+  <path d="M170,150 L720,260" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.55"/>
+  <path d="M1010,150 L460,260" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.55"/>
+
+  <!-- Services row -->
+  <rect x="60" y="440" width="180" height="80" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="150" y="474" text-anchor="middle" font-size="13" font-weight="600" fill="#065f46">MongoDB</text>
+  <text x="150" y="492" text-anchor="middle" font-size="11" fill="#047857">Sessions &amp; user data</text>
+
+  <rect x="270" y="440" width="180" height="80" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="360" y="474" text-anchor="middle" font-size="13" font-weight="600" fill="#312e81">Clerk Auth</text>
+  <text x="360" y="492" text-anchor="middle" font-size="11" fill="#4338ca">Authentication</text>
+
+  <rect x="480" y="440" width="200" height="80" rx="10" fill="#fdf2f8" stroke="#ec4899" stroke-width="1.5"/>
+  <text x="580" y="474" text-anchor="middle" font-size="13" font-weight="600" fill="#831843">Gemini AI</text>
+  <text x="580" y="492" text-anchor="middle" font-size="11" fill="#be185d">AI code review</text>
+
+  <!-- Backend -> services arrows -->
+  <path d="M460,340 L150,440" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M480,340 L360,440" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M560,340 L580,440" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Code Engine group -->
+  <rect x="770" y="430" width="330" height="180" rx="12" fill="#f9fafb" stroke="#9ca3af" stroke-width="1.5"/>
+  <text x="935" y="452" text-anchor="middle" font-size="13" font-weight="700" fill="#374151">Code Execution Engine</text>
+
+  <rect x="800" y="470" width="270" height="55" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="935" y="503" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">REST API</text>
+
+  <rect x="800" y="540" width="270" height="55" rx="8" fill="#ecfeff" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="935" y="563" text-anchor="middle" font-size="12" font-weight="600" fill="#155e75">Docker Containers</text>
+  <text x="935" y="580" text-anchor="middle" font-size="11" fill="#0e7490">Sandboxed execution</text>
+
+  <!-- Backend -> Engine -->
+  <path d="M720,340 L935,470" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="800" y="410" font-size="11" fill="#4b5563">HTTP (submit code)</text>
+
+  <path d="M935,470 L720,345" fill="none" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.7"/>
+  <text x="960" y="430" font-size="11" fill="#4b5563">execution result</text>
+
+  <path d="M935,525 L935,540" fill="none" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="945" y="536" font-size="10" fill="#4b5563"></text>
+  <text x="1075" y="533" font-size="10" fill="#6b7280" text-anchor="end">stdout / stderr / verdict</text>
+
+  <!-- Legend -->
+  <g transform="translate(60,660)">
+    <rect x="0" y="0" width="1060" height="70" rx="8" fill="#f9fafb" stroke="#e5e7eb"/>
+    <line x1="20" y1="20" x2="60" y2="20" stroke="#4b5563" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="70" y="24" font-size="11" fill="#374151">HTTP / server-mediated request</text>
+
+    <line x1="330" y1="20" x2="370" y2="20" stroke="#9333ea" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrowDashed)"/>
+    <text x="380" y="24" font-size="11" fill="#374151">WebRTC — direct peer-to-peer media</text>
+
+    <line x1="20" y1="45" x2="60" y2="45" stroke="#4b5563" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+    <text x="70" y="49" font-size="11" fill="#374151">Response / result returned</text>
+
+    <text x="620" y="24" font-size="11" fill="#6b7280">All boxes group logically related services; deployment topology may differ.</text>
+  </g>
+</svg>
