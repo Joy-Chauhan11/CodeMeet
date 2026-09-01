@@ -133,42 +133,7 @@ Completed sessions are persisted and surfaced in the user's recent session histo
 
 CodeMeet is composed of multiple independent services communicating over HTTP and WebSockets.
 
-```mermaid
-flowchart TD
-    ClientA["Participant A\n(React App)"]
-    ClientB["Participant B\n(React App)"]
-
-    subgraph Backend["CodeMeet Backend — Node.js / Express"]
-        API["REST API"]
-        WS["Socket.IO Server\n(signaling + real-time sync)"]
-    end
-
-    DB[("MongoDB")]
-    Auth["Clerk Auth"]
-    AI["Gemini AI\nCode Review"]
-
-    subgraph Engine["Code Execution Engine"]
-        EngineAPI["REST API"]
-        Docker["Docker Containers\n(sandboxed execution)"]
-    end
-
-    ClientA -- "HTTP" --> API
-    ClientB -- "HTTP" --> API
-    ClientA -- "WebSocket" --> WS
-    ClientB -- "WebSocket" --> WS
-
-    ClientA <-. "WebRTC\nvideo / screen share (P2P)" .-> ClientB
-
-    API --> DB
-    API --> Auth
-    API --> AI
-    API -- "HTTP" --> EngineAPI
-    WS --> API
-
-    EngineAPI --> Docker
-    Docker -- "stdout / stderr / verdict" --> EngineAPI
-    EngineAPI -- "execution result" --> API
-```
+![CodeMeet Architecture](./docs/architecture.svg)  
 
 **Flow summary:**
 
