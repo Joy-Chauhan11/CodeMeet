@@ -35,4 +35,7 @@ jobs:
 
         - name: Build frontend Docker image
           run: docker build -t codemeet-frontend:ci ./frontend
+
+        - name: Run Frontend lint
+          run: npm run lint --prefix frontend
           

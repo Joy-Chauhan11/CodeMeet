@@ -4,7 +4,7 @@ export const LANGUAGE_CONFIG = {
   javascript: {
     name: "JavaScript",
     monacoLang: "javascript",
-    icon: "/icons/javascript.png",
+    icon: "../assets/icon/image.png",
   },
 
   python: {

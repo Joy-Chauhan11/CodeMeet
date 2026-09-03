@@ -360,7 +360,7 @@ const stopScreenShare = async (videoSender) => {
       {/* Local Video */}
       <div>
         <h2 className="font-semibold text-lg mb-2">
-          Local Video
+          You
         </h2>
 
         <div className="rounded-xl overflow-hidden bg-black aspect-video">
@@ -391,7 +391,7 @@ const stopScreenShare = async (videoSender) => {
       {/* Remote Video */}
       <div>
         <h2 className="font-semibold text-lg mb-2">
-          Remote Video
+          Other Participant
         </h2>
 
         <div className="rounded-xl overflow-hidden bg-black aspect-video">

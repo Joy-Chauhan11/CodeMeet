@@ -82,11 +82,23 @@ function Navbar() {
           <div className="avatar">
                <SignedOut>
                 <SignInButton mode="modal">
-          <button className=" px-5 py-2 rounded-xl transition bg-emerald-400">
-           <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
-             Get Started
-             </span>
-          </button>
+         <button
+  className="
+    px-6 py-3
+    rounded-xl
+    bg-gradient-to-r from-emerald-400 to-cyan-400
+    text-white
+    font-semibold
+    shadow-md
+    transition-all
+    duration-200
+    hover:scale-105
+    hover:shadow-lg
+    active:scale-95
+  "
+>
+  Get Started
+</button>
         </SignInButton>
                 
                </SignedOut>
