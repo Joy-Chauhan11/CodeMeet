@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push backend Docker image
-        run: docker push joy110407/codemeet-backend:{{ github.sha }}
+        run: docker push joy110407/codemeet-backend:${{ github.sha }}
 
       - name: Push frontend Docker image
         run: docker push joy110407/codemeet-frontend:${{ github.sha }}
